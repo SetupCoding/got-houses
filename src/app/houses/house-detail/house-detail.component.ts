@@ -18,7 +18,7 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   constructor(private iceAndFireService: IceAndFireService, private houseStoreService: HouseStoreService, private route: ActivatedRoute) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscribeToChanges();
     this.route.params.subscribe((params: Params) => {
       const indexParameter = parseInt(params['index'], 10);
@@ -29,19 +29,19 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.detailedHouseChangeSubscription) {
       this.detailedHouseChangeSubscription.unsubscribe();
     }
   }
 
-  subscribeToChanges() {
+  subscribeToChanges(): void {
     this.detailedHouseChangeSubscription = this.houseStoreService.detailedHouseChanged.subscribe((house: House) => {
       this.house = house;
     });
   }
 
-  setDetailedHouse() {
+  setDetailedHouse(): void {
     this.house = this.houseStoreService.getHouseByIndex(this.index);
     if (!this.house) {
       this.iceAndFireService.fetchHouse(this.index);

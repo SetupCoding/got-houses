@@ -48,12 +48,12 @@ export class HouseStoreService {
     this._detailedHouseChanged = value;
   }
 
-  setHouses(houses: House[]) {
+  setHouses(houses: House[]): void {
     this._houses = this.mapHousesData(houses);
     this.housesChanged.next(this.houses.slice());
   }
 
-  setDetailedHouse(house: House) {
+  setDetailedHouse(house: House): void {
     this._detailedHouse = this.mapHousesData(Array.of(house))[0];
     this.detailedHouseChanged.next(this._detailedHouse);
   }

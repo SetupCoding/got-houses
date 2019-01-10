@@ -13,7 +13,7 @@ export class HousesComponent implements OnInit {
   constructor(private iceAndFireService: IceAndFireService, private breakpointObserver: BreakpointObserver) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.iceAndFireService.initializeHouseData();
     this.subscribeToChanges();
   }

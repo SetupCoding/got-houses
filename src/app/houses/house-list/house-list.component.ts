@@ -24,18 +24,18 @@ export class HouseListComponent implements OnInit, OnDestroy {
   constructor(private iceAndFireService: IceAndFireService, private houseStoreService: HouseStoreService, private renderer: Renderer2) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscribeToChanges();
     this.tableDataSource.paginator = this.paginator;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.housesChangeSubscription) {
       this.housesChangeSubscription.unsubscribe();
     }
   }
 
-  subscribeToChanges() {
+  subscribeToChanges(): void {
     this.housesChangeSubscription = this.houseStoreService.housesChanged.subscribe((houses: House[]) => {
       this.maximumTableDataLength = this.houseStoreService.maximumHouseDataLength;
       this.tableDataSource = new MatTableDataSource<House>(houses);
@@ -43,16 +43,16 @@ export class HouseListComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetchHousesByPage(page: number) {
+  fetchHousesByPage(page: number): void {
     this.iceAndFireService.fetchHouses(page, this.pageSize);
   }
 
-  onPaginateChange(event) {
+  onPaginateChange(event): void {
     this.pageSize = event.pageSize;
     this.fetchHousesByPage(event.pageIndex + 1);
   }
 
-  applySearch(houseName: string) {
+  applySearch(houseName: string): void {
 
   }
 }

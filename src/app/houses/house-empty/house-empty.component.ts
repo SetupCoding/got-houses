@@ -9,7 +9,7 @@ export class HouseEmptyComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

@@ -19,11 +19,11 @@ export class LoadingService {
     this._loadingSubject = value;
   }
 
-  show() {
+  show(): void {
     this.loadingSubject.next(<LoadingState>{show: true});
   }
 
-  hide() {
+  hide(): void {
     this.loadingSubject.next(<LoadingState>{show: false});
   }
 }

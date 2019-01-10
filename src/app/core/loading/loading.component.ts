@@ -16,13 +16,13 @@ export class LoadingComponent implements OnInit, OnDestroy {
   constructor(private loadingService: LoadingService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadingStateChangeSubscription = this.loadingService.loadingSubject.subscribe((state: LoadingState) => {
       this.isLoading = state.show;
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.loadingStateChangeSubscription.unsubscribe();
   }
 }
