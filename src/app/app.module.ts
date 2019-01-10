@@ -4,20 +4,24 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {VersionInterceptor} from './core/interceptors/version.interceptor';
+import {HeaderInterceptor} from './core/interceptors/header.interceptor';
+import {LoadingInterceptor} from './core/interceptors/loading.interceptor';
+import {LoadingModule} from './core/loading/loading.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    LoadingModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: VersionInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
