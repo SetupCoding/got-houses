@@ -1,1 +1,25 @@
-<div *ngIf="!!detailedHouse">{{detailedHouse.words}}</div>
+<mat-card class="mat-elevation-z3" *ngIf="house">
+  <mat-card-title>{{house.name}}</mat-card-title>
+  <mat-card-subtitle *ngIf="house.words">{{house.words}}</mat-card-subtitle>
+  <mat-card-content>
+
+    <!--<mat-tree [dataSource]="house.titles" [treeControl]="treeControl">-->
+    <!--<mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>-->
+    <!--<button mat-icon-button disabled></button>-->
+    <!--{{node.title}}-->
+    <!--</mat-tree-node>-->
+
+    <!--<mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>-->
+    <!--<button mat-icon-button matTreeNodeToggle-->
+    <!--[attr.aria-label]="'toggle ' + node.filename">-->
+    <!--<mat-icon class="mat-icon-rtl-mirror">-->
+    <!--{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}-->
+    <!--</mat-icon>-->
+    <!--</button>-->
+    <!--{{node.filename}} : {{node.type}}-->
+    <!--</mat-tree-node>-->
+    <!--</mat-tree>-->
+
+  </mat-card-content>
+</mat-card>
+

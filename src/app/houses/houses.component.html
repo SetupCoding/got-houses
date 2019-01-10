@@ -1,2 +1,8 @@
-<app-house-list></app-house-list>
-<router-outlet></router-outlet>
+<mat-grid-list [cols]="maxColumns" rowHeight="1:0.95">
+  <mat-grid-tile>
+    <app-house-list></app-house-list>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <router-outlet></router-outlet>
+  </mat-grid-tile>
+</mat-grid-list>
