@@ -3,5 +3,6 @@ export const environment = {
   iceAndFireApi: {
     url: 'https://anapioficeandfire.com/api',
     version: 1
-  }
+  },
+  defaultPageSize: 10
 };

@@ -5,7 +5,8 @@ import {HouseItemComponent} from './house-list/house-item/house-item.component';
 import {HouseDetailComponent} from './house-detail/house-detail.component';
 import {HousesRoutingModule} from './houses-routing.module';
 import {HousesComponent} from './houses.component';
-import {MatFormFieldModule, MatPaginatorModule, MatTableModule} from '@angular/material';
+import {MatCardModule, MatFormFieldModule, MatGridListModule, MatPaginatorModule, MatTableModule} from '@angular/material';
+import { HouseEmptyComponent } from './house-empty/house-empty.component';
 
 @NgModule({
   imports: [
@@ -13,13 +14,16 @@ import {MatFormFieldModule, MatPaginatorModule, MatTableModule} from '@angular/m
     HousesRoutingModule,
     MatTableModule,
     MatPaginatorModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatCardModule,
+    MatGridListModule,
   ],
   declarations: [
     HousesComponent,
     HouseListComponent,
     HouseItemComponent,
-    HouseDetailComponent]
+    HouseDetailComponent,
+    HouseEmptyComponent]
 })
 export class HousesModule {
 }
