@@ -5,13 +5,15 @@ import {HouseItemComponent} from './house-list/house-item/house-item.component';
 import {HouseDetailComponent} from './house-detail/house-detail.component';
 import {HousesRoutingModule} from './houses-routing.module';
 import {HousesComponent} from './houses.component';
-import {MatTableModule} from '@angular/material';
+import {MatFormFieldModule, MatPaginatorModule, MatTableModule} from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     HousesRoutingModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule
   ],
   declarations: [
     HousesComponent,

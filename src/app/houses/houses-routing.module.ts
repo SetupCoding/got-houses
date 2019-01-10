@@ -5,7 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 const housesRoutes: Routes = [{
   path: '', component: HousesComponent, children: [
-    {path: ':houseIndex', component: HouseDetailComponent},
+    {path: ':index', component: HouseDetailComponent},
   ]
 }];
 
