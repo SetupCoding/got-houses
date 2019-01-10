@@ -18,11 +18,11 @@ export class IceAndFireService {
   constructor(private houseStoreService: HouseStoreService, private http: HttpClient) {
   }
 
-  initializeHouseData() {
+  initializeHouseData(): void {
     this.fetchHouses(1, 1, undefined, true);
   }
 
-  fetchHouses(page = 1, pageSize = 10, filters?: HouseFilters, isInitialDataLengthFetch?: boolean) {
+  fetchHouses(page = 1, pageSize = 10, filters?: HouseFilters, isInitialDataLengthFetch?: boolean): void {
     this.cancelOngoingRequests(this.housesRequestSubscription);
     const requestUrl = new URL(environment.iceAndFireApi.url + '/houses');
     requestUrl.searchParams.set('page', String(page));
@@ -41,26 +41,21 @@ export class IceAndFireService {
         } else {
           this.houseStoreService.setHouses(response.body);
         }
-
-
-        // this.maximumTableDataLength = this.extractLastPageNumber(paginationInformation) * this.pageSize;
-        // this.houses = this.mapHousesData(response.body);
-        // this.houseService.setHouses(this.houses);
       }, error => {
         console.error(error);
       });
   }
 
-  fetchHouse(index: number) {
+  fetchHouse(index: number): void {
     this.cancelOngoingRequests(this.houseDetailRequestSubscription);
     const requestUrl = new URL(environment.iceAndFireApi.url + '/houses/' + index);
-    return this.http.get<House>(requestUrl.toString()).subscribe((detailedHouseData: House) => {
+    this.houseDetailRequestSubscription = this.http.get<House>(requestUrl.toString()).subscribe((detailedHouseData: House) => {
       this.houseStoreService.setDetailedHouse(detailedHouseData);
     });
   }
 
-  private cancelOngoingRequests(requestSubscription: Subscription) {
-    if (requestSubscription) {
+  private cancelOngoingRequests(requestSubscription: Subscription): void {
+    if (requestSubscription && !requestSubscription.closed) {
       requestSubscription.unsubscribe();
     }
   }
