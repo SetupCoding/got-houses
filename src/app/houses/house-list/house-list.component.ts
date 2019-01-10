@@ -1,8 +1,7 @@
-import {Component, InjectionToken, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {House} from '../../model/house';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {HttpResponse} from '@angular/common/http';
 import {HouseStoreService} from '../service/house-store.service';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
@@ -18,10 +17,11 @@ export class HouseListComponent implements OnInit, OnDestroy {
   pageSize = environment.defaultPageSize;
   pageSizeOptions = [5, 10, 25, 50];
   maximumTableDataLength = 0;
+  @ViewChild('tableContainer', {read: ElementRef}) public tableContainerRef: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   housesChangeSubscription: Subscription;
 
-  constructor(private iceAndFireService: IceAndFireService, private houseStoreService: HouseStoreService) {
+  constructor(private iceAndFireService: IceAndFireService, private houseStoreService: HouseStoreService, private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -39,6 +39,7 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.housesChangeSubscription = this.houseStoreService.housesChanged.subscribe((houses: House[]) => {
       this.maximumTableDataLength = this.houseStoreService.maximumHouseDataLength;
       this.tableDataSource = new MatTableDataSource<House>(houses);
+      this.renderer.setProperty(this.tableContainerRef.nativeElement, 'scrollTop', 0);
     });
   }
 
