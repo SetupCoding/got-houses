@@ -13,7 +13,6 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./house-list.component.scss']
 })
 export class HouseListComponent implements OnInit, OnDestroy {
-  // houses: House[] = [];
   tableDataSource = new MatTableDataSource<House>([]);
   displayedColumns: string[] = ['houseIndex', 'houseName'];
   pageSize = environment.defaultPageSize;
@@ -28,7 +27,6 @@ export class HouseListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscribeToChanges();
     this.tableDataSource.paginator = this.paginator;
-    // this.fetchHousesByPage(1);
   }
 
   ngOnDestroy() {

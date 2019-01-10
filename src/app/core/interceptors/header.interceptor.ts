@@ -6,7 +6,7 @@ import {environment} from '../../../environments/environment';
 
 
 @Injectable({providedIn: 'root'})
-export class VersionInterceptor implements HttpInterceptor {
+export class HeaderInterceptor implements HttpInterceptor {
   // eTag = '';
 
   constructor() {
