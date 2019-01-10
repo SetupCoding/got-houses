@@ -5,18 +5,30 @@ import {HouseItemComponent} from './house-list/house-item/house-item.component';
 import {HouseDetailComponent} from './house-detail/house-detail.component';
 import {HousesRoutingModule} from './houses-routing.module';
 import {HousesComponent} from './houses.component';
-import {MatCardModule, MatFormFieldModule, MatGridListModule, MatPaginatorModule, MatTableModule} from '@angular/material';
-import { HouseEmptyComponent } from './house-empty/house-empty.component';
+import {
+  MatCardModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatPaginatorModule, MatProgressBarModule,
+  MatRippleModule,
+  MatTableModule,
+  MatToolbarModule
+} from '@angular/material';
+import {HouseEmptyComponent} from './house-empty/house-empty.component';
+import {LoadingModule} from '../core/loading/loading.module';
 
 @NgModule({
   imports: [
     CommonModule,
     HousesRoutingModule,
+    LoadingModule,
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
     MatCardModule,
     MatGridListModule,
+    MatToolbarModule,
+    MatRippleModule
   ],
   declarations: [
     HousesComponent,
