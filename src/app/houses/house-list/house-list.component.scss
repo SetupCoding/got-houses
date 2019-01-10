@@ -6,20 +6,24 @@
 
 .table-container {
   overflow: auto;
-  height: calc(100% - 20px);
+  max-height: calc(100% - 80px);
+
 }
 
-table.housesTable {
-  width: 100%;
+mat-table.housesTable {
 
-  tr.mat-row {
+  mat-row {
     cursor: pointer;
 
     &.highlighted {
-      background: darken(white, 20%);
+      background: darken(white, 10%);
     }
     &:focus {
       outline: 0;
     }
   }
+}
+
+.housesPaginator {
+  background: unset;
 }
