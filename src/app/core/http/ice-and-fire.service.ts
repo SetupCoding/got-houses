@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {House} from '../../models/house';
-import {HouseFilters} from '../../models/house-filters';
+import {HouseFilter} from '../../models/house-filter';
 import {MatTableDataSource} from '@angular/material';
 import {HouseStoreService} from '../../houses/service/house-store.service';
 import {Observable, Subscription} from 'rxjs';
@@ -22,7 +22,7 @@ export class IceAndFireService {
     this.fetchHouses(1, 1, undefined, true);
   }
 
-  fetchHouses(page = 1, pageSize = 10, filters?: HouseFilters, isInitialDataLengthFetch?: boolean): void {
+  fetchHouses(page = 1, pageSize = 10, filters?: HouseFilter, isInitialDataLengthFetch?: boolean): void {
     this.cancelOngoingRequests(this.housesRequestSubscription);
     const requestUrl = new URL(environment.iceAndFireApi.url + '/houses');
     requestUrl.searchParams.set('page', String(page));

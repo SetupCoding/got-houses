@@ -6,13 +6,14 @@ import {HouseDetailComponent} from './house-detail/house-detail.component';
 import {HousesRoutingModule} from './houses-routing.module';
 import {HousesComponent} from './houses.component';
 import {
-  MatCardModule,
+  MatButtonModule,
+  MatCardModule, MatCheckboxModule, MatExpansionModule,
   MatFormFieldModule,
-  MatGridListModule,
+  MatGridListModule, MatIconModule, MatInputModule,
   MatPaginatorModule, MatProgressBarModule,
-  MatRippleModule,
+  MatRippleModule, MatSelectModule,
   MatTableModule,
-  MatToolbarModule
+  MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {HouseEmptyComponent} from './house-empty/house-empty.component';
 import {LoadingModule} from '../core/loading/loading.module';
@@ -25,10 +26,17 @@ import {LoadingModule} from '../core/loading/loading.module';
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
     MatCardModule,
     MatGridListModule,
     MatToolbarModule,
-    MatRippleModule
+    MatRippleModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatCheckboxModule
   ],
   declarations: [
     HousesComponent,

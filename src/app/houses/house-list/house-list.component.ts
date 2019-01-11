@@ -5,6 +5,7 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {HouseStoreService} from '../service/house-store.service';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {HouseFilter, HouseFilterClass} from '../../models/house-filter';
 
 @Component({
   selector: 'app-house-list',
@@ -17,6 +18,8 @@ export class HouseListComponent implements OnInit, OnDestroy {
   pageSize = environment.defaultPageSize;
   pageSizeOptions = [5, 10, 25, 50];
   maximumTableDataLength = 0;
+  possibleFilterTypes: HouseFilter = new HouseFilterClass();
+  filterTypes;
   @ViewChild('tableContainer', {read: ElementRef}) public tableContainerRef: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   housesChangeSubscription: Subscription;
@@ -25,6 +28,9 @@ export class HouseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.filterTypes = Object.keys(this.possibleFilterTypes).map(filterType => {
+      return {name: filterType, type: typeof this.possibleFilterTypes[filterType]};
+    });
     this.subscribeToChanges();
     this.tableDataSource.paginator = this.paginator;
   }
@@ -52,7 +58,11 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.fetchHousesByPage(event.pageIndex + 1);
   }
 
-  applySearch(houseName: string): void {
+  addFilter(): void {
+    //adds a filter
+  }
 
+  applyFilters(houseName: string): void {
+    //trigger search
   }
 }
