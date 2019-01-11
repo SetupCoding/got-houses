@@ -24,6 +24,9 @@ mat-table.housesTable {
   }
 }
 
-.housesPaginator {
+mat-paginator.housesPaginator {
   background: unset;
+}
+mat-toolbar-row.paginatorRow{
+  min-width: 495px;
 }
