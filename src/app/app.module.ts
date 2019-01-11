@@ -9,10 +9,12 @@ import {LoadingInterceptor} from './core/interceptors/loading.interceptor';
 import {LoadingModule} from './core/loading/loading.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ProgressiveWebAppComponent } from './core/progressive-web-app/progressive-web-app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ProgressiveWebAppComponent,
   ],
   imports: [
     AppRoutingModule,
