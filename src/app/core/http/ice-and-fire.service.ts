@@ -43,6 +43,7 @@ export class IceAndFireService {
         }
       }, error => {
         console.error(error);
+        //remove houses or show error to user
       });
   }
 
