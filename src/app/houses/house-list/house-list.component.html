@@ -1,4 +1,4 @@
-<mat-expansion-panel hideToggle class="mat-elevation-z3">
+<mat-expansion-panel hideToggle class="mat-elevation-z3 paginatorRow">
   <mat-expansion-panel-header>
     <mat-paginator class="housesPaginator" [length]="maximumTableDataLength" [pageSize]=pageSize
                    [pageSizeOptions]=pageSizeOptions
@@ -9,27 +9,7 @@
       <mat-icon class="filterIcon" matTooltip="Add app to home screen">filter_list</mat-icon>
     </mat-panel-description>
   </mat-expansion-panel-header>
-
-  <button mat-icon-button color="primary" (click)="addFilter()">
-    <mat-icon>add</mat-icon>
-  </button>
-  <mat-form-field>
-    <mat-select placeholder="Filter type" #selectedFilterType>
-      <mat-option *ngFor="let filterType of filterTypes" [value]="filterType">
-        {{filterType.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="filterInput" *ngIf="selectedFilterType.value && selectedFilterType.value.type === 'string'">
-    <input matInput type="text" min="1" [placeholder]="selectedFilterType.value && selectedFilterType.value.name">
-  </mat-form-field>
-  <mat-checkbox class="filterCheckbox" *ngIf="selectedFilterType.value &&selectedFilterType.value.type !== 'string'">
-    {{selectedFilterType.value.name}}
-  </mat-checkbox>
-
-  <mat-action-row>
-    <button mat-raised-button color="primary" matTooltip="Apply filters" (click)="applyFilters()">Apply</button>
-  </mat-action-row>
+  <app-house-filter></app-house-filter>
 </mat-expansion-panel>
 
 <app-loading></app-loading>

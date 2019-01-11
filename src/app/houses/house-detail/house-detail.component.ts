@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HouseStoreService} from '../service/house-store.service';
+import {HouseStoreService} from '../house-store/house-store.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {House} from '../../models/house';
 import {Subscription} from 'rxjs';

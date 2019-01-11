@@ -3,9 +3,10 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {House} from '../../models/house';
 import {HouseFilter} from '../../models/house-filter';
 import {MatTableDataSource} from '@angular/material';
-import {HouseStoreService} from '../../houses/service/house-store.service';
+import {HouseStoreService} from '../../houses/house-store/house-store.service';
 import {Observable, Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {HouseFilterService} from '../../houses/house-filter/house-filter.service';
 
 
 @Injectable({
@@ -15,23 +16,19 @@ export class IceAndFireService {
   housesRequestSubscription: Subscription;
   houseDetailRequestSubscription: Subscription;
 
-  constructor(private houseStoreService: HouseStoreService, private http: HttpClient) {
+  constructor(private houseStoreService: HouseStoreService, private houseFilterService: HouseFilterService, private http: HttpClient) {
   }
 
   initializeHouseData(): void {
-    this.fetchHouses(1, 1, undefined, true);
+    this.fetchHouses(1, 1, true);
   }
 
-  fetchHouses(page = 1, pageSize = 10, filters?: HouseFilter, isInitialDataLengthFetch?: boolean): void {
+  fetchHouses(page = 1, pageSize = 10, isInitialDataLengthFetch?: boolean): void {
     this.cancelOngoingRequests(this.housesRequestSubscription);
     const requestUrl = new URL(environment.iceAndFireApi.url + '/houses');
     requestUrl.searchParams.set('page', String(page));
     requestUrl.searchParams.append('pageSize', String(pageSize));
-    // if (filters) {
-    //   for (let filterName of Object.keys(filters)) {
-    //     requestUrl.searchParams.append(filterName, filters[filterName]);
-    //   }
-    // }
+    this.addFiltersToRequest(requestUrl);
     this.housesRequestSubscription = this.http.get<House[]>(requestUrl.toString(), {observe: 'response'})
       .subscribe((response: HttpResponse<House[]>) => {
         if (isInitialDataLengthFetch) {
@@ -53,6 +50,12 @@ export class IceAndFireService {
     this.houseDetailRequestSubscription = this.http.get<House>(requestUrl.toString()).subscribe((detailedHouseData: House) => {
       this.houseStoreService.setDetailedHouse(detailedHouseData);
     });
+  }
+
+  addFiltersToRequest(requestUrl: URL) {
+    for (const [key, value] of Object.entries(this.houseFilterService.selectedFilter)) {
+      requestUrl.searchParams.append(key, value);
+    }
   }
 
   private cancelOngoingRequests(requestSubscription: Subscription): void {

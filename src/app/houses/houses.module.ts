@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HouseListComponent} from './house-list/house-list.component';
-import {HouseItemComponent} from './house-list/house-item/house-item.component';
 import {HouseDetailComponent} from './house-detail/house-detail.component';
 import {HousesRoutingModule} from './houses-routing.module';
 import {HousesComponent} from './houses.component';
@@ -9,7 +8,7 @@ import {
   MatButtonModule,
   MatCardModule, MatCheckboxModule, MatExpansionModule,
   MatFormFieldModule,
-  MatGridListModule, MatIconModule, MatInputModule,
+  MatGridListModule, MatIconModule, MatInputModule, MatListModule,
   MatPaginatorModule, MatProgressBarModule,
   MatRippleModule, MatSelectModule,
   MatTableModule,
@@ -17,10 +16,13 @@ import {
 } from '@angular/material';
 import {HouseEmptyComponent} from './house-empty/house-empty.component';
 import {LoadingModule} from '../core/loading/loading.module';
+import { HouseFilterComponent } from './house-filter/house-filter.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     HousesRoutingModule,
     LoadingModule,
     MatTableModule,
@@ -36,14 +38,15 @@ import {LoadingModule} from '../core/loading/loading.module';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatListModule
   ],
   declarations: [
     HousesComponent,
     HouseListComponent,
-    HouseItemComponent,
     HouseDetailComponent,
-    HouseEmptyComponent]
+    HouseEmptyComponent,
+    HouseFilterComponent]
 })
 export class HousesModule {
 }

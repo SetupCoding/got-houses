@@ -1,0 +1,67 @@
+<mat-list role="list">
+  <mat-list-item role="listitem">
+    <button mat-icon-button color="primary" matTooltip="Add filter"
+            (click)="addFilter(selectedFilterType, filterInput.value, filterCheckbox.checked)">
+      <mat-icon>add</mat-icon>
+    </button>
+    <mat-form-field>
+      <mat-select placeholder="Select filter type" #selectedFilterType [formControl]="selectFilterFormControl" required>
+        <mat-option *ngFor="let filterType of filterTypes" [value]="filterType">
+          {{filterType.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="selectFilterFormControl.hasError('required')">Please select a filter type</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="filterInput"
+                    [hidden]="selectedFilterType.value == null || selectedFilterType.value.type === 'boolean'">
+      <input #filterInput matInput type="text" min="1"
+             [placeholder]="selectedFilterType.value && selectedFilterType.value.name">
+    </mat-form-field>
+
+    <mat-checkbox #filterCheckbox class="filterCheckbox"
+                  [hidden]="selectedFilterType.value == null  || selectedFilterType.value.type === 'string'">
+    </mat-checkbox>
+
+
+  </mat-list-item>
+  <ng-container *ngIf="filter">
+    <mat-list-item *ngFor="let filterKey of objectKeys(filter)">
+      <button mat-icon-button color="primary" matTooltip="Remove filter"
+              (click)="removeFilter(selectedFilterTypeToRemove, filterInputRemove.value, filterCheckboxRemove.checked)">
+        <mat-icon>remove</mat-icon>
+      </button>
+      <mat-form-field>
+        <mat-select #selectedFilterTypeToRemove disabled
+                    [formControl]="selectFilterFormControl"
+                    required [value]="filterKey">
+          <mat-option *ngFor="let filterType of filterTypes" [value]="filterType">
+            {{filterType.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="selectFilterFormControl.hasError('required')">Please select a filter type</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="filterInput"
+                      [hidden]="!(isString(filter[filterKey]))">
+        <input #filterInputRemove matInput type="text" min="1" readonly
+               [placeholder]="selectedFilterTypeToRemove.value && selectedFilterTypeToRemove.value.name"
+               [value]="filter[filterKey]">
+      </mat-form-field>
+      <mat-checkbox #filterCheckboxRemove class="filterCheckbox" [checked]="filter[filterKey]" disabled
+                    [hidden]="isString(filter[filterKey])">
+      </mat-checkbox>
+
+
+    </mat-list-item>
+  </ng-container>
+</mat-list>
+<mat-action-row>
+  <button mat-raised-button color="warn" matTooltip="Reset filters" *ngIf="filter"
+          (click)="resetFilters()">Reset
+  </button>
+  <button mat-raised-button color="primary" matTooltip="Apply filters"
+          (click)="applyFilters(selectedFilterType, filterInput.value, filterCheckbox.checked)">Apply
+  </button>
+
+</mat-action-row>

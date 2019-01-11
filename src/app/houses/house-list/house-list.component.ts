@@ -2,10 +2,10 @@ import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@a
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {House} from '../../models/house';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {HouseStoreService} from '../service/house-store.service';
+import {HouseStoreService} from '../house-store/house-store.service';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {HouseFilter, HouseFilterClass} from '../../models/house-filter';
+import {HouseFilterService} from '../house-filter/house-filter.service';
 
 @Component({
   selector: 'app-house-list',
@@ -18,19 +18,19 @@ export class HouseListComponent implements OnInit, OnDestroy {
   pageSize = environment.defaultPageSize;
   pageSizeOptions = [5, 10, 25, 50];
   maximumTableDataLength = 0;
-  possibleFilterTypes: HouseFilter = new HouseFilterClass();
-  filterTypes;
+
   @ViewChild('tableContainer', {read: ElementRef}) public tableContainerRef: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
   housesChangeSubscription: Subscription;
 
-  constructor(private iceAndFireService: IceAndFireService, private houseStoreService: HouseStoreService, private renderer: Renderer2) {
+  constructor(private iceAndFireService: IceAndFireService,
+              private houseStoreService: HouseStoreService,
+              private houseFilterService: HouseFilterService,
+              private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
-    this.filterTypes = Object.keys(this.possibleFilterTypes).map(filterType => {
-      return {name: filterType, type: typeof this.possibleFilterTypes[filterType]};
-    });
     this.subscribeToChanges();
     this.tableDataSource.paginator = this.paginator;
   }
@@ -45,6 +45,9 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.housesChangeSubscription = this.houseStoreService.housesChanged.subscribe((houses: House[]) => {
       this.maximumTableDataLength = this.houseStoreService.maximumHouseDataLength;
       this.tableDataSource = new MatTableDataSource<House>(houses);
+      if (!houses.length) {
+        this.paginator.pageIndex = 0;
+      }
       this.renderer.setProperty(this.tableContainerRef.nativeElement, 'scrollTop', 0);
     });
   }
@@ -58,11 +61,4 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.fetchHousesByPage(event.pageIndex + 1);
   }
 
-  addFilter(): void {
-    //adds a filter
-  }
-
-  applyFilters(houseName: string): void {
-    //trigger search
-  }
 }

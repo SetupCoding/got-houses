@@ -27,14 +27,12 @@ mat-paginator.housesPaginator {
   background: unset;
 }
 
-mat-toolbar-row.paginatorRow {
-  min-width: 495px;
+mat-expansion-panel.paginatorRow {
+  min-width: 591px;
 }
 
 mat-icon.filterIcon {
   margin-top: 12px;
 }
 
-mat-checkbox.filterCheckbox, mat-form-field.filterInput {
-  margin-left: 8px;
-}
+
