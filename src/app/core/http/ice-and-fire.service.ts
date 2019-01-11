@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {House} from '../../model/house';
-import {HouseFilters} from '../../model/house-filters';
+import {House} from '../../models/house';
+import {HouseFilters} from '../../models/house-filters';
 import {MatTableDataSource} from '@angular/material';
 import {HouseStoreService} from '../../houses/service/house-store.service';
 import {Observable, Subscription} from 'rxjs';

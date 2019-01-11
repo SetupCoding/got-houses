@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
-import {House} from '../../model/house';
+import {House} from '../../models/house';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {HouseStoreService} from '../service/house-store.service';
 import {Subscription} from 'rxjs';

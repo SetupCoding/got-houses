@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HouseStoreService} from '../service/house-store.service';
 import {ActivatedRoute, Params} from '@angular/router';
-import {House} from '../../model/house';
+import {House} from '../../models/house';
 import {Subscription} from 'rxjs';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 
