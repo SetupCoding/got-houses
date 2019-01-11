@@ -1,11 +1,10 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSelect} from '@angular/material';
+import {MatSelect} from '@angular/material';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {HouseFilterService} from './house-filter.service';
 import {HouseFilter, HouseFilterClass} from '../../models/house-filter';
 import {FormControl, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {type} from 'os';
 
 @Component({
   selector: 'app-house-filter',
@@ -81,7 +80,7 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
     this.iceAndFireService.initializeHouseData();
   }
 
-  isString(value): void {
+  isString(value): boolean {
     return typeof value === 'string';
   }
 
