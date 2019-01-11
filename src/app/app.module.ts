@@ -11,7 +11,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ProgressiveWebAppComponent } from './core/progressive-web-app/progressive-web-app.component';
 import { HeaderComponent } from './core/header/header.component';
-import {MatToolbarModule, MatTooltipModule} from '@angular/material';
+import {MatButtonModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import {MatToolbarModule, MatTooltipModule} from '@angular/material';
     LoadingModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatButtonModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [

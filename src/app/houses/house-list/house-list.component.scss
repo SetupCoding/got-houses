@@ -6,8 +6,7 @@
 
 .table-container {
   overflow: auto;
-  max-height: calc(100% - 80px);
-
+  max-height: calc(100% - (80px + 64px));
 }
 
 mat-table.housesTable {
