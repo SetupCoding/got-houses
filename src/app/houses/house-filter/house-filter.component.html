@@ -57,9 +57,10 @@
   </ng-container>
 </mat-list>
 <mat-action-row>
-  <button mat-raised-button color="warn" matTooltip="Reset filters" *ngIf="filter"
-          (click)="resetFilters()">Reset
+  <button mat-raised-button matTooltip="Reset filters" *ngIf="filter"
+          (click)="resetFilters()"><mat-icon>delete</mat-icon>
   </button>
+  <span class="buttonSpacer"></span>
   <button mat-raised-button color="primary" matTooltip="Apply filters"
           (click)="applyFilters(selectedFilterType, filterInput.value, filterCheckbox.checked)">Apply
   </button>
