@@ -15,6 +15,7 @@ import {HouseFilterService} from '../../houses/house-filter/house-filter.service
 export class IceAndFireService {
   housesRequestSubscription: Subscription;
   houseDetailRequestSubscription: Subscription;
+  currentPageSize = environment.defaultPageSize;
 
   constructor(private houseStoreService: HouseStoreService, private houseFilterService: HouseFilterService, private http: HttpClient) {
   }
@@ -34,8 +35,9 @@ export class IceAndFireService {
         if (isInitialDataLengthFetch) {
           const paginationInformation = response.headers.get('link');
           this.houseStoreService.maximumHouseDataLength = this.extractLastPageNumber(paginationInformation);
-          this.fetchHouses(1, environment.defaultPageSize);
+          this.fetchHouses(1, this.currentPageSize);
         } else {
+          this.currentPageSize = pageSize;
           this.houseStoreService.setHouses(response.body);
         }
       }, error => {

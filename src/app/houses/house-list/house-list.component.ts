@@ -23,6 +23,7 @@ export class HouseListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   housesChangeSubscription: Subscription;
+  isPaginationEvent = false;
 
   constructor(private iceAndFireService: IceAndFireService,
               private houseStoreService: HouseStoreService,
@@ -45,10 +46,9 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.housesChangeSubscription = this.houseStoreService.housesChanged.subscribe((houses: House[]) => {
       this.maximumTableDataLength = this.houseStoreService.maximumHouseDataLength;
       this.tableDataSource = new MatTableDataSource<House>(houses);
-      if (!houses.length) {
-        this.paginator.pageIndex = 0;
-      }
+      this.adjustPaginator();
       this.renderer.setProperty(this.tableContainerRef.nativeElement, 'scrollTop', 0);
+
     });
   }
 
@@ -56,8 +56,16 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.iceAndFireService.fetchHouses(page, this.pageSize);
   }
 
+  adjustPaginator(): void {
+    if (!this.isPaginationEvent) {
+      this.paginator.pageIndex = 0;
+    }
+    this.isPaginationEvent = false;
+  }
+
   onPaginateChange(event): void {
     this.pageSize = event.pageSize;
+    this.isPaginationEvent = true;
     this.fetchHousesByPage(event.pageIndex + 1);
   }
 
