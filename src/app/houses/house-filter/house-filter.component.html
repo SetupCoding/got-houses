@@ -28,7 +28,8 @@
     </mat-checkbox>
 
   </mat-list-item>
-  <mat-list-item class="filterItem" role="listitem" *ngIf="filter">
+
+  <mat-list-item class="filterItem" role="listitem" *ngIf="!isEmptyObject(filter)">
     <mat-chip-list>
       <app-house-filter-item *ngFor="let filterKey of objectKeys(filter)" [filter]="filter"
                              [filterKey]="filterKey" [filterValue]="filter[filterKey]"></app-house-filter-item>
@@ -37,7 +38,7 @@
 
 </mat-list>
 <mat-action-row>
-  <button mat-raised-button matTooltip="Reset filters" *ngIf="filter"
+  <button mat-raised-button matTooltip="Reset filters" *ngIf="!isEmptyObject(filter)"
           (click)="resetFilters()">
     <mat-icon>delete</mat-icon>
   </button>

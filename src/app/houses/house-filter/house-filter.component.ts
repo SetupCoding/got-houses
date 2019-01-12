@@ -41,8 +41,9 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
 
   subscribeToChanges(): void {
     this.filtersChangeSubscription = this.houseFilterService.filtersChanged.subscribe((houseFilter: HouseFilter) => {
-      if (this.isEmptyObject(houseFilter)) {
+      if (this.isEmptyObject(houseFilter) && this.filter) {
         delete this.filter;
+        this.resetFilters();
       } else {
         this.filter = houseFilter;
       }
@@ -81,7 +82,7 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
   }
 
 
-  isEmptyObject(object): boolean {
+  isEmptyObject(object = {}): boolean {
     return Object.keys(object).length === 0 && object.constructor === Object;
   }
 }
