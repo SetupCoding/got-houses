@@ -38,8 +38,8 @@ export class HouseFilterService {
     this.filtersChanged.next(this.selectedFilter);
   }
 
-  removeFilter(selectedFilterType: MatSelect, filterInput: string, isFilterCheckboxChecked: boolean): void {
-    const filterType = selectedFilterType.value;
+  removeFilter(selectedFilterType: string): void {
+    const filterType = selectedFilterType;
     if (filterType) {
       delete this.selectedFilter[filterType];
     }

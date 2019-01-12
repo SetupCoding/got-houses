@@ -52,16 +52,15 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
   addFilter(selectedFilterType: MatSelect, filterInput: string, isFilterCheckboxChecked: boolean): void {
     if (selectedFilterType.value == null) {
       this.selectFilterFormControl.markAsTouched({onlySelf: true});
-      this.selectFilterFormControl.setErrors({'required': true});
+      if (this.filter == null || Object.keys(this.filter).length === 0) {
+        this.selectFilterFormControl.setErrors({'required': true});
+      }
     } else {
       this.houseFilterService.addFilter(selectedFilterType, filterInput, isFilterCheckboxChecked);
       this.resetFilterFields();
     }
   }
 
-  removeFilter(selectedFilterType: MatSelect, filterInput: string, isFilterCheckboxChecked: boolean) {
-    this.houseFilterService.removeFilter(selectedFilterType, filterInput, isFilterCheckboxChecked);
-  }
 
   applyFilters(selectedFilterType: MatSelect, filterInput: string, isFilterCheckboxChecked: boolean): void {
     this.addFilter(selectedFilterType, filterInput, isFilterCheckboxChecked);
@@ -81,9 +80,6 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
     this.iceAndFireService.initializeHouseData();
   }
 
-  isString(value): boolean {
-    return typeof value === 'string';
-  }
 
   isEmptyObject(object): boolean {
     return Object.keys(object).length === 0 && object.constructor === Object;
