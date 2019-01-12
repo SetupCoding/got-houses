@@ -11,7 +11,7 @@
   </mat-card-subtitle>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngIf="house.region" matTooltip="The region that this house resides in.">
+      <mat-list-item *ngIf="house.region" matTooltip="Region that this house resides in">
         <mat-icon>location_on</mat-icon>
         {{house.region}}
       </mat-list-item>
@@ -20,7 +20,7 @@
                      multi="true">
         <mat-expansion-panel *ngIf="house.titles[0] !== ''" class="titlesRow">
           <mat-expansion-panel-header>
-            <mat-panel-title matTooltip="The titles that this house holds.">
+            <mat-panel-title matTooltip="Titles this house holds">
               Titles
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -30,7 +30,7 @@
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="house.seats[0] !== ''" class="titlesRow">
           <mat-expansion-panel-header>
-            <mat-panel-title matTooltip="The seats that this house holds.">
+            <mat-panel-title matTooltip="Seats this house holds">
               Seats
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -40,7 +40,7 @@
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="house.ancestralWeapons[0] !== ''" class="titlesRow">
           <mat-expansion-panel-header>
-            <mat-panel-title matTooltip="Noteworthy weapons that this house owns.">
+            <mat-panel-title matTooltip="Noteworthy weapons this house owns">
               Ancestral Weapons
             </mat-panel-title>
           </mat-expansion-panel-header>
