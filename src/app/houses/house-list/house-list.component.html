@@ -23,6 +23,10 @@
       <mat-header-cell mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell mat-cell *matCellDef="let house">{{house.name}}</mat-cell>
     </ng-container>
+    <ng-container matColumnDef="houseRegion">
+      <mat-header-cell mat-header-cell *matHeaderCellDef>Region</mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let house">{{house.region}}</mat-cell>
+    </ng-container>
 
     <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
     <mat-row matRipple [routerLink]="[row.index]" routerLinkActive="highlighted"

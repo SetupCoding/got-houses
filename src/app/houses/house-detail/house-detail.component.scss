@@ -3,3 +3,17 @@
   width: 98%;
   height: inherit;
 }
+
+mat-card-subtitle div.words {
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 1);
+}
+
+mat-list-item.noIcon {
+  margin-left: 24px;
+}
+
+mat-expansion-panel.titlesRow {
+  margin-left: 16px;
+}

@@ -1,8 +1,55 @@
 <mat-card class="mat-elevation-z3" *ngIf="house">
   <mat-card-title>{{house.name}}</mat-card-title>
-  <mat-card-subtitle *ngIf="house.words">{{house.words}}</mat-card-subtitle>
+  <mat-card-subtitle>
+    <div *ngIf="house.founded || house.diedOut">* {{house.founded || 'unknown'}} <span
+      *ngIf="house.diedOut">- † {{house.diedOut}}</span>
+    </div>
+  </mat-card-subtitle>
+  <mat-card-subtitle>
+    <div *ngIf="house.words" class="words">"{{house.words}}"</div>
+  </mat-card-subtitle>
   <mat-card-content>
-
+    <mat-list>
+      <mat-list-item *ngIf="house.region" matTooltip="The region that this house resides in.">
+        <mat-icon>location_on</mat-icon>
+        {{house.region}}
+      </mat-list-item>
+      <mat-list-item class="noIcon" *ngIf="house.coatOfArms">Coat of Arms: {{house.coatOfArms}}.</mat-list-item>
+      <!--<mat-list-item class="noIcon">-->
+        <mat-accordion *ngIf="house.titles">
+          <mat-expansion-panel class="titlesRow">
+            <mat-expansion-panel-header>
+              <mat-panel-title matTooltip="The titles that this house holds.">
+                Titles
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+              <mat-list-item *ngFor="let title of house.titles">{{title}}</mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="titlesRow">
+            <mat-expansion-panel-header>
+              <mat-panel-title matTooltip="The seats that this house holds.">
+                Seats
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+              <mat-list-item *ngFor="let seat of house.seats">{{seat}}</mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="titlesRow">
+            <mat-expansion-panel-header>
+              <mat-panel-title matTooltip="Noteworthy weapons that this house owns.">
+                Ancestral Weapons
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+              <mat-list-item *ngFor="let weapon of house.ancestralWeapons">{{weapon}}</mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      <!--</mat-list-item>-->
+    </mat-list>
     <!--<mat-tree [dataSource]="house.titles" [treeControl]="treeControl">-->
     <!--<mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>-->
     <!--<button mat-icon-button disabled></button>-->
