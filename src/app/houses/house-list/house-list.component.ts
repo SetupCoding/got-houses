@@ -15,7 +15,7 @@ import {SnackBarService} from '../../core/snack-bar/snack-bar.service';
 })
 export class HouseListComponent implements OnInit, OnDestroy {
   tableDataSource = new MatTableDataSource<House>([]);
-  displayedColumns: string[] = ['houseIndex', 'houseName'];
+  displayedColumns: string[] = ['houseIndex', 'houseName', 'houseRegion'];
   pageSize = environment.defaultPageSize;
   pageSizeOptions = [5, 10, 25, 50];
   maximumTableDataLength = 0;
