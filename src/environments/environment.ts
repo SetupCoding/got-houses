@@ -8,7 +8,7 @@ export const environment = {
     url: 'https://anapioficeandfire.com/api',
     version: 1
   },
-  defaultPageSize: 10
+  defaultPageSize: 25
 
 };
 
