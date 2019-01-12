@@ -19,3 +19,7 @@ app-root {
     overflow-y: hidden;
   }
 }
+
+.paginatorRow .mat-expansion-panel-content > .mat-expansion-panel-body {
+  padding: 0;
+}

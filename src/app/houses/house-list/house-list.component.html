@@ -13,7 +13,7 @@
 </mat-expansion-panel>
 
 <app-loading></app-loading>
-<div class="table-container mat-elevation-z3" #tableContainer>
+<div class="mat-elevation-z3 table-container" #tableContainer>
   <mat-table mat-table class="housesTable" [dataSource]="tableDataSource">
     <ng-container matColumnDef="houseIndex">
       <mat-header-cell mat-header-cell *matHeaderCellDef>#</mat-header-cell>
@@ -28,6 +28,4 @@
     <mat-row matRipple [routerLink]="[row.index]" routerLinkActive="highlighted"
              *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-
 </div>
-
