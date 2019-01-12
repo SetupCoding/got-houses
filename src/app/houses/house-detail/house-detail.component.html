@@ -1,7 +1,8 @@
 <mat-card class="mat-elevation-z3" *ngIf="house">
   <mat-card-title>{{house.name}}</mat-card-title>
   <mat-card-subtitle>
-    <div *ngIf="house.founded || house.diedOut">* {{house.founded || 'unknown'}} <span
+    <div *ngIf="house.founded || house.diedOut" matTooltip="Founded">* {{house.founded || 'unknown'}} <span
+      matTooltip="Died out"
       *ngIf="house.diedOut">- † {{house.diedOut}}</span>
     </div>
   </mat-card-subtitle>
@@ -15,8 +16,9 @@
         {{house.region}}
       </mat-list-item>
       <mat-list-item class="noIcon" *ngIf="house.coatOfArms">Coat of Arms: {{house.coatOfArms}}.</mat-list-item>
-      <mat-accordion *ngIf="house.titles">
-        <mat-expansion-panel class="titlesRow">
+      <mat-accordion *ngIf="house.titles[0] !== '' || house.seats[0] !== '' || house.ancestralWeapons[0] !== ''"
+                     multi="true">
+        <mat-expansion-panel *ngIf="house.titles[0] !== ''" class="titlesRow">
           <mat-expansion-panel-header>
             <mat-panel-title matTooltip="The titles that this house holds.">
               Titles
@@ -26,7 +28,7 @@
             <mat-list-item *ngFor="let title of house.titles">{{title}}</mat-list-item>
           </mat-list>
         </mat-expansion-panel>
-        <mat-expansion-panel class="titlesRow">
+        <mat-expansion-panel *ngIf="house.seats[0] !== ''" class="titlesRow">
           <mat-expansion-panel-header>
             <mat-panel-title matTooltip="The seats that this house holds.">
               Seats
@@ -36,7 +38,7 @@
             <mat-list-item *ngFor="let seat of house.seats">{{seat}}</mat-list-item>
           </mat-list>
         </mat-expansion-panel>
-        <mat-expansion-panel class="titlesRow">
+        <mat-expansion-panel *ngIf="house.ancestralWeapons[0] !== ''" class="titlesRow">
           <mat-expansion-panel-header>
             <mat-panel-title matTooltip="Noteworthy weapons that this house owns.">
               Ancestral Weapons
