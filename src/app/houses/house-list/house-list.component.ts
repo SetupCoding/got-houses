@@ -6,6 +6,7 @@ import {HouseStoreService} from '../house-store/house-store.service';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {HouseFilterService} from '../house-filter/house-filter.service';
+import {SnackBarService} from '../../core/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-house-list',
@@ -28,7 +29,8 @@ export class HouseListComponent implements OnInit, OnDestroy {
   constructor(private iceAndFireService: IceAndFireService,
               private houseStoreService: HouseStoreService,
               private houseFilterService: HouseFilterService,
-              private renderer: Renderer2) {
+              private renderer: Renderer2,
+              private snackBarService: SnackBarService) {
   }
 
   ngOnInit(): void {
@@ -46,9 +48,11 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.housesChangeSubscription = this.houseStoreService.housesChanged.subscribe((houses: House[]) => {
       this.maximumTableDataLength = this.houseStoreService.maximumHouseDataLength;
       this.tableDataSource = new MatTableDataSource<House>(houses);
+      if (this.houseStoreService.hasError) {
+        this.snackBarService.showSnackBar();
+      }
       this.adjustPaginator();
       this.renderer.setProperty(this.tableContainerRef.nativeElement, 'scrollTop', 0);
-
     });
   }
 

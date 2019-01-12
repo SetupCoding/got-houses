@@ -26,9 +26,7 @@ export class IceAndFireService {
 
   fetchHouses(page = 1, pageSize = 10, isInitialDataLengthFetch?: boolean): void {
     this.cancelOngoingRequests(this.housesRequestSubscription);
-    const requestUrl = new URL(environment.iceAndFireApi.url + '/houses');
-    requestUrl.searchParams.set('page', String(page));
-    requestUrl.searchParams.append('pageSize', String(pageSize));
+    const requestUrl = this.generateRequestUrl(page, pageSize);
     this.addFiltersToRequest(requestUrl);
     this.housesRequestSubscription = this.http.get<House[]>(requestUrl.toString(), {observe: 'response'})
       .subscribe((response: HttpResponse<House[]>) => {
@@ -38,19 +36,29 @@ export class IceAndFireService {
           this.fetchHouses(1, this.currentPageSize);
         } else {
           this.currentPageSize = pageSize;
-          this.houseStoreService.setHouses(response.body);
+          this.houseStoreService.setHouses(response.body, false);
         }
       }, error => {
         console.error(error);
-        //remove houses or show error to user
+        this.houseStoreService.setHouses([], true);
       });
+  }
+
+  generateRequestUrl(page: number, pageSize: number): URL {
+    const requestUrl = new URL(environment.iceAndFireApi.url + '/houses');
+    requestUrl.searchParams.set('page', String(page));
+    requestUrl.searchParams.append('pageSize', String(pageSize));
+    return requestUrl;
   }
 
   fetchHouse(index: number): void {
     this.cancelOngoingRequests(this.houseDetailRequestSubscription);
     const requestUrl = new URL(environment.iceAndFireApi.url + '/houses/' + index);
     this.houseDetailRequestSubscription = this.http.get<House>(requestUrl.toString()).subscribe((detailedHouseData: House) => {
-      this.houseStoreService.setDetailedHouse(detailedHouseData);
+      this.houseStoreService.setDetailedHouse(detailedHouseData, false);
+    }, error => {
+      console.error(error);
+      this.houseStoreService.setDetailedHouse(undefined, true);
     });
   }
 

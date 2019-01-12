@@ -7,11 +7,11 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HeaderInterceptor} from './core/interceptors/header.interceptor';
 import {LoadingInterceptor} from './core/interceptors/loading.interceptor';
 import {LoadingModule} from './core/loading/loading.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { ProgressiveWebAppComponent } from './core/progressive-web-app/progressive-web-app.component';
-import { HeaderComponent } from './core/header/header.component';
-import {MatButtonModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
+import {ProgressiveWebAppComponent} from './core/progressive-web-app/progressive-web-app.component';
+import {HeaderComponent} from './core/header/header.component';
+import {MatButtonModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import {MatButtonModule, MatToolbarModule, MatTooltipModule} from '@angular/mate
     MatToolbarModule,
     MatTooltipModule,
     MatButtonModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    MatSnackBarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},

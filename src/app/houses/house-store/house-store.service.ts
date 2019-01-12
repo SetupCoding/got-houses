@@ -11,6 +11,7 @@ export class HouseStoreService {
   private _maximumHouseDataLength = 0;
   private _housesChanged = new Subject<House[]>();
   private _detailedHouseChanged = new Subject<House>();
+  private _hasError: boolean;
 
 
   constructor() {
@@ -48,13 +49,25 @@ export class HouseStoreService {
     this._detailedHouseChanged = value;
   }
 
-  setHouses(houses: House[]): void {
+  get hasError(): boolean {
+    return this._hasError;
+  }
+
+  set hasError(value: boolean) {
+    this._hasError = value;
+  }
+
+  setHouses(houses: House[], hasError?: boolean): void {
+    this._hasError = hasError;
     this._houses = this.mapHousesData(houses);
     this.housesChanged.next(this.houses.slice());
   }
 
-  setDetailedHouse(house: House): void {
-    this._detailedHouse = this.mapHousesData(Array.of(house))[0];
+  setDetailedHouse(house: House, hasError?: boolean): void {
+    this._hasError = hasError;
+    if (house) {
+      this._detailedHouse = this.mapHousesData(Array.of(house))[0];
+    }
     this.detailedHouseChanged.next(this._detailedHouse);
   }
 

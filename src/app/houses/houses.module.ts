@@ -10,7 +10,7 @@ import {
   MatFormFieldModule,
   MatGridListModule, MatIconModule, MatInputModule, MatListModule,
   MatPaginatorModule, MatProgressBarModule,
-  MatRippleModule, MatSelectModule,
+  MatRippleModule, MatSelectModule, MatSnackBarModule,
   MatTableModule,
   MatToolbarModule, MatTooltipModule
 } from '@angular/material';
