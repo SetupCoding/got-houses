@@ -9,7 +9,6 @@ import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material'
   ],
   imports: [
     CommonModule,
-    // MatProgressSpinnerModule,
     MatProgressBarModule
   ],
   providers: [],
