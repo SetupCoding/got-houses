@@ -4,7 +4,6 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {House} from '../../models/house';
 import {Subscription} from 'rxjs';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
-import {SnackBarService} from '../../core/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-house-detail',
@@ -18,8 +17,7 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
 
   constructor(private iceAndFireService: IceAndFireService,
               private houseStoreService: HouseStoreService,
-              private route: ActivatedRoute,
-              private snackBarService: SnackBarService) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
