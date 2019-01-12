@@ -16,8 +16,13 @@ app-root {
   right: 0;
 
   app-houses {
-    overflow-y: hidden;
+    overflow-y: auto;
+    flex: 1;
   }
+}
+
+mat-grid-list.contentView {
+  height: 100%;
 }
 
 .paginatorRow .mat-expansion-panel-content > .mat-expansion-panel-body {

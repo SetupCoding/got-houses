@@ -20,7 +20,7 @@ export class HousesComponent implements OnInit {
 
   subscribeToChanges(): void {
     const windowSizeChanges = this.breakpointObserver.observe([
-      '(max-width: 768px)'
+      '(max-width: 1196px)'
     ]);
 
     windowSizeChanges.subscribe(result => {
