@@ -51,14 +51,26 @@ export class IceAndFireService {
     return requestUrl;
   }
 
-  fetchHouse(index: number): void {
-    this.cancelOngoingRequests(this.houseDetailRequestSubscription);
-    const requestUrl = new URL(environment.iceAndFireApi.url + '/houses/' + index);
-    this.houseDetailRequestSubscription = this.http.get<House>(requestUrl.toString()).subscribe((detailedHouseData: House) => {
-      this.houseStoreService.setDetailedHouse(detailedHouseData, false);
-    }, error => {
-      console.error(error);
-      this.houseStoreService.setDetailedHouse(undefined, true);
+  fetchHouse(index: number, isAdditionalInformationRequest?: boolean): Promise<House> {
+    return new Promise((resolve, reject) => {
+      if(!isAdditionalInformationRequest) {
+        this.cancelOngoingRequests(this.houseDetailRequestSubscription);
+      }
+      const requestUrl = new URL(environment.iceAndFireApi.url + '/houses/' + index);
+      this.houseDetailRequestSubscription = this.http.get<House>(requestUrl.toString()).subscribe((detailedHouseData: House) => {
+        if (isAdditionalInformationRequest) {
+          resolve(this.houseStoreService.mapHousesData(Array.of(detailedHouseData))[0]);
+        } else {
+          this.houseStoreService.setDetailedHouse(detailedHouseData, false);
+        }
+      }, error => {
+        console.error(error);
+        if (isAdditionalInformationRequest) {
+          reject(undefined);
+        } else {
+          this.houseStoreService.setDetailedHouse(undefined, true);
+        }
+      });
     });
   }
 

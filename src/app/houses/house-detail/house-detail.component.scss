@@ -14,6 +14,10 @@ mat-list-item.noIcon {
   margin-left: 24px;
 }
 
-mat-expansion-panel.titlesRow {
+mat-list-item.detailRoute {
+  cursor: pointer;
+}
+
+mat-expansion-panel.expansionPanelRow {
   margin-left: 16px;
 }

@@ -16,9 +16,9 @@
         {{house.region}}
       </mat-list-item>
       <mat-list-item class="noIcon" *ngIf="house.coatOfArms">Coat of Arms: {{house.coatOfArms}}.</mat-list-item>
-      <mat-accordion *ngIf="house.titles[0] !== '' || house.seats[0] !== '' || house.ancestralWeapons[0] !== ''"
-                     multi="true">
-        <mat-expansion-panel *ngIf="house.titles[0] !== ''" class="titlesRow">
+      <mat-accordion
+        *ngIf="hasAdditionalInformation()">
+        <mat-expansion-panel *ngIf="hasTitles()" class="expansionPanelRow">
           <mat-expansion-panel-header>
             <mat-panel-title matTooltip="Titles this house holds">
               Titles
@@ -28,7 +28,7 @@
             <mat-list-item *ngFor="let title of house.titles">{{title}}</mat-list-item>
           </mat-list>
         </mat-expansion-panel>
-        <mat-expansion-panel *ngIf="house.seats[0] !== ''" class="titlesRow">
+        <mat-expansion-panel *ngIf="hasSeats()" class="expansionPanelRow">
           <mat-expansion-panel-header>
             <mat-panel-title matTooltip="Seats this house holds">
               Seats
@@ -38,7 +38,7 @@
             <mat-list-item *ngFor="let seat of house.seats">{{seat}}</mat-list-item>
           </mat-list>
         </mat-expansion-panel>
-        <mat-expansion-panel *ngIf="house.ancestralWeapons[0] !== ''" class="titlesRow">
+        <mat-expansion-panel *ngIf="hasAncestralWeapons()" class="expansionPanelRow">
           <mat-expansion-panel-header>
             <mat-panel-title matTooltip="Noteworthy weapons this house owns">
               Ancestral Weapons
@@ -46,6 +46,16 @@
           </mat-expansion-panel-header>
           <mat-list>
             <mat-list-item *ngFor="let weapon of house.ancestralWeapons">{{weapon}}</mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="hasCadetBranches()" class="expansionPanelRow">
+          <mat-expansion-panel-header>
+            <mat-panel-title matTooltip="Houses founded from this house">
+              Cadet Branches
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item class="detailRoute" *ngFor="let cadetBranch of house.cadetBranchesDetails" [routerLink]="['../'+cadetBranch.index]">{{cadetBranch.name}}</mat-list-item>
           </mat-list>
         </mat-expansion-panel>
       </mat-accordion>

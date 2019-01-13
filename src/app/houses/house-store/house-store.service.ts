@@ -75,16 +75,17 @@ export class HouseStoreService {
     return this.houses.find(house => house.index === index);
   }
 
-  private mapHousesData(housesData: House[]): House[] {
+  mapHousesData(housesData: House[]): House[] {
     return housesData.map(houseData => {
       return {
         index: this.extractIndexFromUrl(houseData.url),
+        cadetBranchesDetails: [],
         ...houseData
       };
     });
   }
 
-  private extractIndexFromUrl(url: string): number {
+  extractIndexFromUrl(url: string): number {
     const pathnameToSegment = new URL(url).pathname;
     const extractedIndex = pathnameToSegment.substr(pathnameToSegment.lastIndexOf('/') + 1);
     return parseInt(extractedIndex, 10);

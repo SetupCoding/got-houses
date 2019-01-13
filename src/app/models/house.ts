@@ -1,5 +1,7 @@
 export interface House {
   index: number;
+  overlordDetails: { index?: number, name?: string };
+  cadetBranchesDetails: [{ index: number, name: string }?];
   url: string;
   name: string;
   region: string;
