@@ -1,6 +1,6 @@
 {
-  "name": "got-houses",
-  "short_name": "got-houses",
+  "name": "A PWA of Ice and Fire",
+  "short_name": "A PWA of Ice and Fire",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
