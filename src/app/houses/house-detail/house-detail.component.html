@@ -16,7 +16,12 @@
         {{house.region}}
       </mat-list-item>
       <mat-list-item class="noIcon" *ngIf="house.coatOfArms">Coat of Arms: {{house.coatOfArms}}.</mat-list-item>
-      <mat-list-item class="noIcon detailRoute" *ngIf="house.overlordDetails" matTooltip="House that this house answers to"
+
+      <app-character-detail *ngIf="house.currentLordDetails" [characterDetails]="house.currentLordDetails"
+                            [characterType]="'Current Lord'"></app-character-detail>
+
+      <mat-list-item class="noIcon detailRoute" *ngIf="house.overlordDetails"
+                     matTooltip="House that this house answers to"
                      [routerLink]="['../'+house.overlordDetails.index]">Overlord: {{house.overlordDetails.name}}.
       </mat-list-item>
       <mat-accordion

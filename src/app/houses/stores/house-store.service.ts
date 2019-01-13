@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {House} from '../../models/house';
 import {Subject} from 'rxjs';
+import {ExtractService} from '../../core/extract/extract.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class HouseStoreService {
   private _hasError: boolean;
 
 
-  constructor() {
+  constructor(private extractService: ExtractService) {
   }
 
   get houses(): House[] {
@@ -78,16 +79,12 @@ export class HouseStoreService {
   mapHousesData(housesData: House[]): House[] {
     return housesData.map(houseData => {
       return {
-        index: this.extractIndexFromUrl(houseData.url),
+        index: this.extractService.extractIndexFromUrl(houseData.url),
         cadetBranchesDetails: [],
         ...houseData
       };
     });
   }
 
-  extractIndexFromUrl(url: string): number {
-    const pathnameToSegment = new URL(url).pathname;
-    const extractedIndex = pathnameToSegment.substr(pathnameToSegment.lastIndexOf('/') + 1);
-    return parseInt(extractedIndex, 10);
-  }
+
 }

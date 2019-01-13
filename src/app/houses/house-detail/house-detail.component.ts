@@ -1,9 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HouseStoreService} from '../house-store/house-store.service';
+import {HouseStoreService} from '../stores/house-store.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {House} from '../../models/house';
 import {Subscription} from 'rxjs';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
+import {ExtractService} from '../../core/extract/extract.service';
+import {Character} from '../../models/character';
 
 @Component({
   selector: 'app-house-detail',
@@ -17,7 +19,8 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
 
   constructor(private iceAndFireService: IceAndFireService,
               private houseStoreService: HouseStoreService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private extractService: ExtractService) {
   }
 
   ngOnInit(): void {
@@ -40,8 +43,9 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   private subscribeToChanges(): void {
     this.detailedHouseChangeSubscription = this.houseStoreService.detailedHouseChanged.subscribe((house: House) => {
       this.house = house;
-      this.fetchOverlordDetails();
-      this.fetchDetailedCadetBranches();
+      this.fetchDetails();
+
+
     });
   }
 
@@ -50,9 +54,25 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     if (!this.house) {
       this.iceAndFireService.fetchHouse(this.index);
     } else {
-      this.fetchDetailedCadetBranches();
-      this.fetchOverlordDetails();
+      this.fetchDetails();
     }
+  }
+
+  private fetchDetails() {
+    this.fetchOverlordDetails();
+    this.fetchDetailedCadetBranches();
+    this.fetchCurrentLordDetails();
+  }
+
+  private fetchOverlordDetails(): void {
+    if (this.house.overlord) {
+      delete this.house.overlordDetails;
+      const overlordIndex = this.extractService.extractIndexFromUrl(this.house.overlord);
+      this.iceAndFireService.fetchHouse(overlordIndex, true).then((overlordDetails: House) => {
+        this.house.overlordDetails = {index: overlordDetails.index, name: overlordDetails.name};
+      });
+    }
+
   }
 
   private fetchDetailedCadetBranches(): void {
@@ -60,7 +80,7 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
       this.house.cadetBranchesDetails = [];
       const cadetDetailRequestPromises = [];
       this.house.cadetBranches.forEach((cadetBranchUrl: string) => {
-        const cadetBranchIndex = this.houseStoreService.extractIndexFromUrl(cadetBranchUrl);
+        const cadetBranchIndex = this.extractService.extractIndexFromUrl(cadetBranchUrl);
         cadetDetailRequestPromises.push(this.iceAndFireService.fetchHouse(cadetBranchIndex, true));
       });
       Promise.all(cadetDetailRequestPromises).then((cadetBranchDetails) => {
@@ -76,15 +96,14 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  private fetchOverlordDetails(): void {
-    if (this.house.overlord) {
-      delete this.house.overlordDetails;
-      const overlordIndex = this.houseStoreService.extractIndexFromUrl(this.house.overlord);
-      this.iceAndFireService.fetchHouse(overlordIndex, true).then((overlordDetails: House) => {
-        this.house.overlordDetails = {index: overlordDetails.index, name: overlordDetails.name};
+  fetchCurrentLordDetails(): void {
+    if (this.house.currentLord) {
+      delete this.house.currentLordDetails;
+      const characterIndex = this.extractService.extractIndexFromUrl(this.house.currentLord);
+      this.iceAndFireService.fetchCharacter(characterIndex).then((currentLordDetailsData: Character) => {
+        this.house.currentLordDetails = currentLordDetailsData;
       });
     }
-
   }
 
   hasTitles(): boolean {
@@ -106,6 +125,4 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   hasAdditionalInformation() {
     return this.hasTitles() || this.hasSeats() || this.hasAncestralWeapons() || this.hasCadetBranches();
   }
-
-
 }

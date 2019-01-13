@@ -1,12 +1,12 @@
-import {Inject, Injectable, InjectionToken} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {House} from '../../models/house';
-import {HouseFilter} from '../../models/house-filter';
-import {MatTableDataSource} from '@angular/material';
-import {HouseStoreService} from '../../houses/house-store/house-store.service';
-import {Observable, Subscription} from 'rxjs';
+import {HouseStoreService} from '../../houses/stores/house-store.service';
+import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {HouseFilterService} from '../../houses/house-filter/house-filter.service';
+import {Character} from '../../models/character';
+import {CharacterStoreService} from '../../houses/stores/character-store.service';
 
 
 @Injectable({
@@ -17,7 +17,10 @@ export class IceAndFireService {
   houseDetailRequestSubscription: Subscription;
   currentPageSize = environment.defaultPageSize;
 
-  constructor(private houseStoreService: HouseStoreService, private houseFilterService: HouseFilterService, private http: HttpClient) {
+  constructor(private houseStoreService: HouseStoreService,
+              private houseFilterService: HouseFilterService,
+              private characterStoreService: CharacterStoreService,
+              private http: HttpClient) {
   }
 
   initializeHouseData(): void {
@@ -53,7 +56,7 @@ export class IceAndFireService {
 
   fetchHouse(index: number, isAdditionalInformationRequest?: boolean): Promise<House> {
     return new Promise((resolve, reject) => {
-      if(!isAdditionalInformationRequest) {
+      if (!isAdditionalInformationRequest) {
         this.cancelOngoingRequests(this.houseDetailRequestSubscription);
       }
       const requestUrl = new URL(environment.iceAndFireApi.url + '/houses/' + index);
@@ -70,6 +73,17 @@ export class IceAndFireService {
         } else {
           this.houseStoreService.setDetailedHouse(undefined, true);
         }
+      });
+    });
+  }
+
+  fetchCharacter(index: number): Promise<Character> {
+    return new Promise((resolve, reject) => {
+      const requestUrl = new URL(environment.iceAndFireApi.url + '/characters/' + index);
+      this.http.get<Character>(requestUrl.toString()).subscribe((detailedCharacterData: Character) => {
+        resolve(this.characterStoreService.setDetailedCharacter(detailedCharacterData, false));
+      }, error => {
+        reject(this.characterStoreService.setDetailedCharacter(undefined, true));
       });
     });
   }

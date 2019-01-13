@@ -2,7 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@a
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {House} from '../../models/house';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {HouseStoreService} from '../house-store/house-store.service';
+import {HouseStoreService} from '../stores/house-store.service';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {HouseFilterService} from '../house-filter/house-filter.service';

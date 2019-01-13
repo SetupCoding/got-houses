@@ -19,6 +19,7 @@ import {LoadingModule} from '../core/loading/loading.module';
 import {HouseFilterComponent} from './house-filter/house-filter.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HouseFilterItemComponent} from './house-filter/house-filter-item/house-filter-item.component';
+import { CharacterDetailComponent } from './character-detail/character-detail.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import {HouseFilterItemComponent} from './house-filter/house-filter-item/house-f
     HouseDetailComponent,
     HouseEmptyComponent,
     HouseFilterComponent,
-    HouseFilterItemComponent]
+    HouseFilterItemComponent,
+    CharacterDetailComponent]
 })
 export class HousesModule {
 }

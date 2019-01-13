@@ -1,7 +1,13 @@
+import {Character} from './character';
+
 export interface House {
   index: number;
   overlordDetails: { index?: number, name?: string };
   cadetBranchesDetails: [{ index: number, name: string }?];
+  currentLordDetails: Character;
+  heirDetails: Character;
+  founderDetails: Character;
+  swornMembersDetails: Character[];
   url: string;
   name: string;
   region: string;

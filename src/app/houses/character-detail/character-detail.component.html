@@ -1,0 +1,16 @@
+<mat-card class="mat-elevation-z3 noIcon" [matTooltip]="characterType">
+  <mat-card-title class="characterTitle">
+    <span *ngFor="let title of characterDetails.titles">{{title}} </span> -
+    {{characterDetails.name}}
+    <span *ngIf="characterDetails.gender">
+            <span *ngIf="characterDetails.gender === 'Male'">♂️</span>
+            <span *ngIf="characterDetails.gender === 'Female'">♀️</span>
+          </span>
+  </mat-card-title>
+  <mat-card-subtitle>
+    <div *ngIf="characterDetails.born || characterDetails.died" matTooltip="Born">*
+      {{characterDetails.born || 'unknown'}}
+      <span matTooltip="Died" *ngIf="characterDetails.died">- † {{characterDetails.died}}</span>
+    </div>
+  </mat-card-subtitle>
+</mat-card>
