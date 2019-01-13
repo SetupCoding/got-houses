@@ -29,6 +29,19 @@
       </mat-list-item>
       <mat-accordion
         *ngIf="hasAdditionalInformation()">
+        <mat-expansion-panel *ngIf="hasSwornMembers()" class="expansionPanelRow">
+          <mat-expansion-panel-header>
+            <mat-panel-title matTooltip="Characters sworn to this house">
+              Sworn Members
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item *ngFor="let swornMember of house.swornMembersDetails">
+              <app-character-detail  *ngIf="swornMember" [characterDetails]="swornMember"
+                                    [characterType]="'Sworn Member'"></app-character-detail>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
         <mat-expansion-panel *ngIf="hasTitles()" class="expansionPanelRow">
           <mat-expansion-panel-header>
             <mat-panel-title matTooltip="Titles this house holds">

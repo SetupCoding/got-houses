@@ -64,6 +64,7 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     this.fetchCurrentLordDetails();
     this.fetchHeirDetails();
     this.fetchFounderDetails();
+    this.fetchSwornMemberDetails();
   }
 
   private fetchOverlordDetails(): void {
@@ -84,7 +85,7 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
         const cadetBranchIndex = this.extractService.extractIndexFromUrl(cadetBranchUrl);
         cadetDetailRequestPromises.push(this.iceAndFireService.fetchHouse(cadetBranchIndex, true));
       });
-      Promise.all(cadetDetailRequestPromises).then((cadetBranchDetails) => {
+      Promise.all(cadetDetailRequestPromises).then((cadetBranchDetails: House[]) => {
         cadetBranchDetails.forEach((cadetBranchDetail: House) => {
           if (cadetBranchDetail) {
             this.house.cadetBranchesDetails.push({index: cadetBranchDetail.index, name: cadetBranchDetail.name});
@@ -124,6 +125,21 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  fetchSwornMemberDetails(): void {
+    if (this.hasSwornMembers()) {
+      this.house.swornMembersDetails = [];
+      const swornMembersDetailRequestPromises = [];
+      this.house.swornMembers.forEach((swornMemberUrl: string) => {
+        swornMembersDetailRequestPromises.push(this.fetchCharacterDetails(swornMemberUrl));
+      });
+      Promise.all(swornMembersDetailRequestPromises).then((characters: Character[]) => {
+        characters.forEach((character: Character) => {
+          this.house.swornMembersDetails.push(character);
+        });
+      });
+    }
+  }
+
   fetchCharacterDetails(characterUrl: string): Promise<Character> {
     return new Promise((resolve) => {
       const characterIndex = this.extractService.extractIndexFromUrl(characterUrl);
@@ -149,7 +165,11 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     return this.house.cadetBranches.length > 1;
   }
 
+  hasSwornMembers() {
+    return this.house.swornMembers.length > 1;
+  }
+
   hasAdditionalInformation() {
-    return this.hasTitles() || this.hasSeats() || this.hasAncestralWeapons() || this.hasCadetBranches();
+    return this.hasTitles() || this.hasSeats() || this.hasAncestralWeapons() || this.hasCadetBranches() || this.hasSwornMembers();
   }
 }
