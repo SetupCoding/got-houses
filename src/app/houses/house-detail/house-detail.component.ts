@@ -16,6 +16,12 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   house: House;
   index: number;
   detailedHouseChangeSubscription: Subscription;
+  cadetDetailRequestPromises: Promise<House>[];
+  swornMembersDetailRequestPromises: Promise<Character>[];
+  overlordDetailsRequestPromise: Promise<House>;
+  currentLordDetailsRequestPromise: Promise<Character>;
+  heirDetailsRequestPromise: Promise<Character>;
+  founderDetailsRequestPromise: Promise<Character>;
 
   constructor(private iceAndFireService: IceAndFireService,
               private houseStoreService: HouseStoreService,
@@ -44,21 +50,15 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     this.detailedHouseChangeSubscription = this.houseStoreService.detailedHouseChanged.subscribe((house: House) => {
       this.house = house;
       this.fetchDetails();
-
-
     });
   }
 
   private setDetailedHouse(): void {
-    this.house = this.houseStoreService.getHouseByIndex(this.index);
-    if (!this.house) {
-      this.iceAndFireService.fetchHouse(this.index);
-    } else {
-      this.fetchDetails();
-    }
+    this.iceAndFireService.fetchHouse(this.index);
   }
 
   private fetchDetails() {
+    this.removePendingPromises();
     this.fetchOverlordDetails();
     this.fetchDetailedCadetBranches();
     this.fetchCurrentLordDetails();
@@ -71,7 +71,8 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     if (this.house.overlord) {
       delete this.house.overlordDetails;
       const overlordIndex = this.extractService.extractIndexFromUrl(this.house.overlord);
-      this.iceAndFireService.fetchHouse(overlordIndex, true).then((overlordDetails: House) => {
+      this.overlordDetailsRequestPromise = this.iceAndFireService.fetchHouse(overlordIndex, true);
+      this.overlordDetailsRequestPromise.then((overlordDetails: House) => {
         this.house.overlordDetails = {index: overlordDetails.index, name: overlordDetails.name};
       });
     }
@@ -79,16 +80,20 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
 
   private fetchDetailedCadetBranches(): void {
     if (this.hasCadetBranches()) {
-      this.house.cadetBranchesDetails = [];
-      const cadetDetailRequestPromises = [];
+
+      this.cadetDetailRequestPromises = [];
       this.house.cadetBranches.forEach((cadetBranchUrl: string) => {
         const cadetBranchIndex = this.extractService.extractIndexFromUrl(cadetBranchUrl);
-        cadetDetailRequestPromises.push(this.iceAndFireService.fetchHouse(cadetBranchIndex, true));
+        this.cadetDetailRequestPromises.push(this.iceAndFireService.fetchHouse(cadetBranchIndex, true));
       });
-      Promise.all(cadetDetailRequestPromises).then((cadetBranchDetails: House[]) => {
+      Promise.all(this.cadetDetailRequestPromises).then((cadetBranchDetails: House[]) => {
+        this.house.cadetBranchesDetails = [];
         cadetBranchDetails.forEach((cadetBranchDetail: House) => {
           if (cadetBranchDetail) {
-            this.house.cadetBranchesDetails.push({index: cadetBranchDetail.index, name: cadetBranchDetail.name});
+            const cadet = {index: cadetBranchDetail.index, name: cadetBranchDetail.name};
+            if (!this.isInArray(this.house.cadetBranchesDetails, cadet)) {
+              this.house.cadetBranchesDetails.push(cadet);
+            }
             this.house.cadetBranchesDetails.sort((a, b) => {
               return a.name.localeCompare(b.name);
             });
@@ -101,7 +106,8 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   fetchCurrentLordDetails(): void {
     if (this.house.currentLord) {
       delete this.house.currentLordDetails;
-      this.fetchCharacterDetails(this.house.currentLord).then((character: Character) => {
+      this.currentLordDetailsRequestPromise = this.fetchCharacterDetails(this.house.currentLord);
+      this.currentLordDetailsRequestPromise.then((character: Character) => {
         this.house.currentLordDetails = character;
       });
     }
@@ -110,7 +116,8 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   fetchHeirDetails(): void {
     if (this.house.heir) {
       delete this.house.heirDetails;
-      this.fetchCharacterDetails(this.house.heir).then((character: Character) => {
+      this.heirDetailsRequestPromise = this.fetchCharacterDetails(this.house.heir);
+      this.heirDetailsRequestPromise.then((character: Character) => {
         this.house.heirDetails = character;
       });
     }
@@ -119,7 +126,8 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   fetchFounderDetails(): void {
     if (this.house.founder) {
       delete this.house.founderDetails;
-      this.fetchCharacterDetails(this.house.founder).then((character: Character) => {
+      this.founderDetailsRequestPromise = this.fetchCharacterDetails(this.house.founder);
+      this.founderDetailsRequestPromise.then((character: Character) => {
         this.house.founderDetails = character;
       });
     }
@@ -127,12 +135,12 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
 
   fetchSwornMemberDetails(): void {
     if (this.hasSwornMembers()) {
-      this.house.swornMembersDetails = [];
-      const swornMembersDetailRequestPromises = [];
+      this.swornMembersDetailRequestPromises = [];
       this.house.swornMembers.forEach((swornMemberUrl: string) => {
-        swornMembersDetailRequestPromises.push(this.fetchCharacterDetails(swornMemberUrl));
+        this.swornMembersDetailRequestPromises.push(this.fetchCharacterDetails(swornMemberUrl));
       });
-      Promise.all(swornMembersDetailRequestPromises).then((characters: Character[]) => {
+      Promise.all(this.swornMembersDetailRequestPromises).then((characters: Character[]) => {
+        this.house.swornMembersDetails = [];
         characters.forEach((character: Character) => {
           if (!this.isInArray(this.house.swornMembersDetails, character)) {
             this.house.swornMembersDetails.push(character);
@@ -153,6 +161,15 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
         resolve(characterDetailsData);
       });
     });
+  }
+
+  removePendingPromises(): void {
+    this.cadetDetailRequestPromises = [];
+    this.swornMembersDetailRequestPromises = [];
+    delete this.overlordDetailsRequestPromise;
+    delete this.currentLordDetailsRequestPromise;
+    delete this.heirDetailsRequestPromise;
+    delete this.founderDetailsRequestPromise;
   }
 
   hasTitles(): boolean {
@@ -178,4 +195,9 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   hasAdditionalInformation() {
     return this.hasTitles() || this.hasSeats() || this.hasAncestralWeapons() || this.hasCadetBranches() || this.hasSwornMembers();
   }
+
+  isInArray(arrayToSearch, objectToFind): boolean {
+    return arrayToSearch.find(member => member.index === objectToFind.index);
+  }
 }
+
