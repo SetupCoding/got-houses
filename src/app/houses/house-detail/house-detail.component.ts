@@ -37,23 +37,25 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  subscribeToChanges(): void {
+  private subscribeToChanges(): void {
     this.detailedHouseChangeSubscription = this.houseStoreService.detailedHouseChanged.subscribe((house: House) => {
       this.house = house;
+      this.fetchOverlordDetails();
       this.fetchDetailedCadetBranches();
     });
   }
 
-  setDetailedHouse(): void {
+  private setDetailedHouse(): void {
     this.house = this.houseStoreService.getHouseByIndex(this.index);
     if (!this.house) {
       this.iceAndFireService.fetchHouse(this.index);
     } else {
       this.fetchDetailedCadetBranches();
+      this.fetchOverlordDetails();
     }
   }
 
-  private fetchDetailedCadetBranches() {
+  private fetchDetailedCadetBranches(): void {
     if (this.hasCadetBranches()) {
       this.house.cadetBranchesDetails = [];
       const cadetDetailRequestPromises = [];
@@ -72,6 +74,17 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
         });
       });
     }
+  }
+
+  private fetchOverlordDetails(): void {
+    if (this.house.overlord) {
+      delete this.house.overlordDetails;
+      const overlordIndex = this.houseStoreService.extractIndexFromUrl(this.house.overlord);
+      this.iceAndFireService.fetchHouse(overlordIndex, true).then((overlordDetails: House) => {
+        this.house.overlordDetails = {index: overlordDetails.index, name: overlordDetails.name};
+      });
+    }
+
   }
 
   hasTitles(): boolean {
