@@ -6,20 +6,28 @@ import {HousesRoutingModule} from './houses-routing.module';
 import {HousesComponent} from './houses.component';
 import {
   MatButtonModule,
-  MatCardModule, MatCheckboxModule, MatChipsModule, MatExpansionModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatExpansionModule,
   MatFormFieldModule,
-  MatGridListModule, MatIconModule, MatInputModule, MatListModule,
-  MatPaginatorModule, MatProgressBarModule,
-  MatRippleModule, MatSelectModule, MatSnackBarModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatPaginatorModule,
+  MatRippleModule,
+  MatSelectModule,
   MatTableModule,
-  MatToolbarModule, MatTooltipModule
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import {HouseEmptyComponent} from './house-empty/house-empty.component';
 import {LoadingModule} from '../core/loading/loading.module';
 import {HouseFilterComponent} from './house-filter/house-filter.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HouseFilterItemComponent} from './house-filter/house-filter-item/house-filter-item.component';
-import { CharacterDetailComponent } from './character-detail/character-detail.component';
+import {CharacterDetailComponent} from './character-detail/character-detail.component';
 
 @NgModule({
   imports: [

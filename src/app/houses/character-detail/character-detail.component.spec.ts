@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CharacterDetailComponent } from './character-detail.component';
+import {CharacterDetailComponent} from './character-detail.component';
+import {MatCardModule, MatTooltipModule} from '@angular/material';
 
 describe('CharacterDetailComponent', () => {
   let component: CharacterDetailComponent;
@@ -8,9 +9,9 @@ describe('CharacterDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CharacterDetailComponent ]
-    })
-    .compileComponents();
+      declarations: [CharacterDetailComponent],
+      imports: [MatCardModule, MatTooltipModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

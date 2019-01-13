@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HouseFilterItemComponent } from './house-filter-item.component';
+import {HouseFilterItemComponent} from './house-filter-item.component';
+import {MatChipsModule, MatIconModule} from '@angular/material';
 
 describe('HouseFilterItemComponent', () => {
   let component: HouseFilterItemComponent;
@@ -8,9 +9,10 @@ describe('HouseFilterItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HouseFilterItemComponent ]
+      imports: [MatIconModule, MatChipsModule],
+      declarations: [HouseFilterItemComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

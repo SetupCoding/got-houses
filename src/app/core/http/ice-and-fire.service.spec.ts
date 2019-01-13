@@ -1,9 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { IceAndFireService } from './ice-and-fire.service';
+import {IceAndFireService} from './ice-and-fire.service';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('IceAndFireService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({imports: [HttpClientModule]}));
 
   it('should be created', () => {
     const service: IceAndFireService = TestBed.get(IceAndFireService);
