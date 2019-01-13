@@ -9,9 +9,9 @@ export class ProgressiveWebAppService {
 
   constructor(private serviceWorkerUpdate: SwUpdate) {
     serviceWorkerUpdate.available.subscribe(event => {
-      // if (askUserToUpdate()) {
-      //   window.location.reload();
-      // }
+      if (confirm('An update is available. Reload now?')) {
+        window.location.reload();
+      }
     });
     window.addEventListener('beforeinstallprompt', event => {
       event.preventDefault();
