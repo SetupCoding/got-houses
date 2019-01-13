@@ -15,6 +15,10 @@
         <mat-icon>location_on</mat-icon>
         {{house.region}}
       </mat-list-item>
+      <mat-list-item class="noIcon detailRoute" *ngIf="house.overlordDetails"
+                     matTooltip="House that this house answers to"
+                     [routerLink]="['../'+house.overlordDetails.index]">Overlord: {{house.overlordDetails.name}}.
+      </mat-list-item>
       <mat-list-item class="noIcon" *ngIf="house.coatOfArms">Coat of Arms: {{house.coatOfArms}}.</mat-list-item>
 
       <app-character-detail *ngIf="house.founderDetails" [characterDetails]="house.founderDetails"
@@ -23,10 +27,7 @@
                             [characterType]="'Current Lord'"></app-character-detail>
       <app-character-detail class="heir" *ngIf="house.heirDetails" [characterDetails]="house.heirDetails"
                             [characterType]="'Heir'"></app-character-detail>
-      <mat-list-item class="noIcon detailRoute" *ngIf="house.overlordDetails"
-                     matTooltip="House that this house answers to"
-                     [routerLink]="['../'+house.overlordDetails.index]">Overlord: {{house.overlordDetails.name}}.
-      </mat-list-item>
+
       <mat-accordion
         *ngIf="hasAdditionalInformation()">
         <mat-expansion-panel *ngIf="hasSwornMembers()" class="expansionPanelRow">
@@ -36,7 +37,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-list>
-            <mat-list-item *ngFor="let swornMember of house.swornMembersDetails">
+            <mat-list-item class="swornMember" *ngFor="let swornMember of house.swornMembersDetails">
               <app-character-detail  *ngIf="swornMember" [characterDetails]="swornMember"
                                     [characterType]="'Sworn Member'"></app-character-detail>
             </mat-list-item>

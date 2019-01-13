@@ -24,6 +24,9 @@ app-root {
 mat-grid-list.contentView {
   height: 100%;
 }
+mat-grid-tile.detailContainer{
+  overflow: auto;
+}
 
 .paginatorRow .mat-expansion-panel-content > .mat-expansion-panel-body {
   padding: 0;
