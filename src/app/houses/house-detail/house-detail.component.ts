@@ -62,6 +62,7 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     this.fetchOverlordDetails();
     this.fetchDetailedCadetBranches();
     this.fetchCurrentLordDetails();
+    this.fetchHeirDetails();
   }
 
   private fetchOverlordDetails(): void {
@@ -99,11 +100,28 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
   fetchCurrentLordDetails(): void {
     if (this.house.currentLord) {
       delete this.house.currentLordDetails;
-      const characterIndex = this.extractService.extractIndexFromUrl(this.house.currentLord);
-      this.iceAndFireService.fetchCharacter(characterIndex).then((currentLordDetailsData: Character) => {
-        this.house.currentLordDetails = currentLordDetailsData;
+      this.fetchCharacterDetails(this.house.currentLord).then((character: Character) => {
+        this.house.currentLordDetails = character;
       });
     }
+  }
+
+  fetchHeirDetails(): void {
+    if (this.house.heir) {
+      delete this.house.heirDetails;
+      this.fetchCharacterDetails(this.house.heir).then((character: Character) => {
+        this.house.heirDetails = character;
+      });
+    }
+  }
+
+  fetchCharacterDetails(characterUrl: string): Promise<Character> {
+    return new Promise((resolve) => {
+      const characterIndex = this.extractService.extractIndexFromUrl(characterUrl);
+      this.iceAndFireService.fetchCharacter(characterIndex).then((characterDetailsData: Character) => {
+        resolve(characterDetailsData);
+      });
+    });
   }
 
   hasTitles(): boolean {

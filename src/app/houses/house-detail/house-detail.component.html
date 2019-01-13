@@ -19,7 +19,8 @@
 
       <app-character-detail *ngIf="house.currentLordDetails" [characterDetails]="house.currentLordDetails"
                             [characterType]="'Current Lord'"></app-character-detail>
-
+      <app-character-detail class="heir" *ngIf="house.heirDetails" [characterDetails]="house.heirDetails"
+                            [characterType]="'Heir'"></app-character-detail>
       <mat-list-item class="noIcon detailRoute" *ngIf="house.overlordDetails"
                      matTooltip="House that this house answers to"
                      [routerLink]="['../'+house.overlordDetails.index]">Overlord: {{house.overlordDetails.name}}.
