@@ -1,6 +1,7 @@
 <mat-card class="mat-elevation-z3 noIcon" [ngClass]="characterType.toLowerCase()==='heir'?'heir':''">
   <mat-card-title class="characterTitle" [matTooltip]="characterType">
-    <span *ngFor="let title of characterDetails.titles; let isLast=last">{{title}}{{isLast ? '' : ', '}}</span> -
+    <span *ngFor="let title of characterDetails.titles;
+    let isLast=last; let index=index">{{title}}{{isLast ? (index !== 0 ? ' - ' : ' ' ) : ', '}}</span>
     {{characterDetails.name}}
     <span *ngIf="characterDetails.gender">
             <span *ngIf="characterDetails.gender === 'Male'">♂️</span>
