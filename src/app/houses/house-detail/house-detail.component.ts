@@ -134,7 +134,13 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
       });
       Promise.all(swornMembersDetailRequestPromises).then((characters: Character[]) => {
         characters.forEach((character: Character) => {
-          this.house.swornMembersDetails.push(character);
+          if (!this.isInArray(this.house.swornMembersDetails, character)) {
+            this.house.swornMembersDetails.push(character);
+          }
+          this.house.swornMembersDetails.sort((a, b) => {
+            const fullName = a.titles.join() + a.name;
+            return fullName.localeCompare(b.titles.join() + b.name);
+          });
         });
       });
     }
