@@ -73,4 +73,7 @@ export class HouseListComponent implements OnInit, OnDestroy {
     this.fetchHousesByPage(event.pageIndex + 1);
   }
 
+  hasFilters(): boolean {
+    return !this.houseFilterService.isEmptyObject();
+  }
 }

@@ -6,7 +6,9 @@
                    (page)="onPaginateChange($event)" (click)="$event.stopPropagation()">
     </mat-paginator>
     <mat-panel-description>
-      <mat-icon class="filterIcon" matTooltip="Filter">filter_list</mat-icon>
+      <mat-icon #filterListIcon class="filterIcon" [ngClass]="hasFilters()? 'mat-accent':''" matTooltip="Filter">
+        filter_list
+      </mat-icon>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <app-house-filter></app-house-filter>

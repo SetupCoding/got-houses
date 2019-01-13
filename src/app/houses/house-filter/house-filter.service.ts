@@ -50,4 +50,7 @@ export class HouseFilterService {
     this.selectedFilter = <HouseFilter>{};
     this.filtersChanged.next(this.selectedFilter);
   }
+  isEmptyObject(object = this.selectedFilter): boolean {
+    return Object.keys(object).length === 0 && object.constructor === Object;
+  }
 }

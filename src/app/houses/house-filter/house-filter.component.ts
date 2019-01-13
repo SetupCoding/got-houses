@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {HouseFilterService} from './house-filter.service';
@@ -41,7 +41,7 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
 
   subscribeToChanges(): void {
     this.filtersChangeSubscription = this.houseFilterService.filtersChanged.subscribe((houseFilter: HouseFilter) => {
-      if (this.isEmptyObject(houseFilter) && this.filter) {
+      if (!this.hasFilters(houseFilter) && this.filter) {
         delete this.filter;
         this.resetFilters();
       } else {
@@ -81,8 +81,7 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
     this.iceAndFireService.initializeHouseData();
   }
 
-
-  isEmptyObject(object = {}): boolean {
-    return Object.keys(object).length === 0 && object.constructor === Object;
+  hasFilters(object): boolean {
+    return !this.houseFilterService.isEmptyObject(object);
   }
 }
