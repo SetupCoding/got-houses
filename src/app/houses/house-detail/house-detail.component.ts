@@ -63,6 +63,7 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     this.fetchDetailedCadetBranches();
     this.fetchCurrentLordDetails();
     this.fetchHeirDetails();
+    this.fetchFounderDetails();
   }
 
   private fetchOverlordDetails(): void {
@@ -73,7 +74,6 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
         this.house.overlordDetails = {index: overlordDetails.index, name: overlordDetails.name};
       });
     }
-
   }
 
   private fetchDetailedCadetBranches(): void {
@@ -111,6 +111,15 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
       delete this.house.heirDetails;
       this.fetchCharacterDetails(this.house.heir).then((character: Character) => {
         this.house.heirDetails = character;
+      });
+    }
+  }
+
+  fetchFounderDetails(): void {
+    if (this.house.founder) {
+      delete this.house.founderDetails;
+      this.fetchCharacterDetails(this.house.founder).then((character: Character) => {
+        this.house.founderDetails = character;
       });
     }
   }
