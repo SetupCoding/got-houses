@@ -19,12 +19,21 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HouseFilterItemComponent} from './house-filter-item/house-filter-item.component';
 import {of, Subject} from 'rxjs';
 import {HouseFilter} from '../../models/house-filter';
+import {ActivatedRoute, Params, RouterModule, Routes} from '@angular/router';
+import {HousesComponent} from '../houses.component';
+import {HouseEmptyComponent} from '../house-empty/house-empty.component';
+import {HouseDetailComponent} from '../house-detail/house-detail.component';
 
 
 describe('HouseFilterComponent', () => {
   let fixture;
   let component;
-
+  const housesRoutes: Routes = [{
+    path: '', component: HousesComponent, children: [
+      {path: '', component: HouseEmptyComponent},
+      {path: ':index', component: HouseDetailComponent},
+    ]
+  }];
   const mockHouseFilter: HouseFilter = {
     name: 'House Algood',
     region: '',
@@ -49,12 +58,18 @@ describe('HouseFilterComponent', () => {
         MatFormFieldModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+        RouterModule.forRoot(housesRoutes),
       ],
       declarations: [
+        HousesComponent,
+        HouseEmptyComponent,
+        HouseDetailComponent,
         HouseFilterComponent,
         HouseFilterItemComponent
       ],
-      providers: [],
+      providers: [
+        {provide: ActivatedRoute, useValue: {queryParams: of({filter: '{"hasWords":true}'})}},
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(HouseFilterComponent);
@@ -79,6 +94,7 @@ describe('HouseFilterComponent', () => {
 
   it('should run #subscribeToChanges()', async () => {
     const houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
     spyOn(houseFilterService, 'filtersChanged').and.returnValue(of(<HouseFilter>mockHouseFilter));
     component.subscribeToChanges();
     houseFilterService.filtersChanged.next(<HouseFilter>mockHouseFilter);
@@ -86,7 +102,10 @@ describe('HouseFilterComponent', () => {
   it('should run #subscribeToChanges() with empty filter', async () => {
     const houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
     spyOn(houseFilterService, 'filtersChanged').and.returnValue(of(<HouseFilter>mockHouseFilter));
-    expect(component.filter).toBeFalsy();
+    const route = fixture.debugElement.injector.get(ActivatedRoute);
+    expect(component.filter).toBeTruthy();
+    component.resetFilters();
+    expect(component.filter).toEqual({});
     component.filter = mockHouseFilter;
     expect(component.filter).toBeTruthy();
     houseFilterService.filtersChanged.next(<HouseFilter>{});
@@ -96,16 +115,16 @@ describe('HouseFilterComponent', () => {
   it('should run #addFilter()', async () => {
     const houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
     component.addFilter(<MatSelect>{value: {name: 'name', type: 'string'}}, 'peter', null);
-    expect(component.filter).toEqual(<HouseFilter>{name: 'peter'});
+    expect(component.filter).toEqual(<HouseFilter>{name: 'peter', hasWords: true});
   });
   it('should add name filter House Algood', async () => {
     const houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
     component.addFilter(<MatSelect>{value: {name: 'name', type: 'string'}}, 'House Algood', null);
-    expect(component.filter).toEqual(<HouseFilter>{name: 'House Algood'});
+    expect(component.filter).toEqual(<HouseFilter>{name: 'House Algood', hasWords: true});
   });
   it('should not add empty filter', async () => {
     component.addFilter(<MatSelect>{value: undefined}, 'peter', false);
-    expect(component.filter).toEqual(undefined);
+    expect(component.filter).toEqual(<HouseFilter>{hasWords: true});
   });
 
   it('should run #applyFilters()', async () => {
@@ -141,5 +160,8 @@ describe('HouseFilterComponent', () => {
     const result = component.hasFilters(mockHouseFilter);
     expect(result).toBeTruthy();
   });
-
+  it('should return [] on  #objectKeys() with undefined object', async () => {
+    const result = component.objectKeys(undefined);
+    expect(result.length < 1).toBeTruthy();
+  });
 });

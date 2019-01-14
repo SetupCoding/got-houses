@@ -2,28 +2,38 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HouseListComponent} from './house-list.component';
 import {
-  MatCheckboxModule, MatChipsModule,
-  MatExpansionModule, MatFormFieldModule, MatGridListModule,
-  MatIconModule, MatInputModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
   MatListModule,
   MatPaginatorModule,
-  MatSelectModule, MatSnackBarModule,
+  MatSelectModule,
+  MatSnackBarModule,
   MatTableModule
 } from '@angular/material';
 import {LoadingModule} from '../../core/loading/loading.module';
 import {HouseFilterComponent} from '../house-filter/house-filter.component';
-import {RouterModule} from '@angular/router';
+import {ActivatedRoute, RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HouseFilterItemComponent} from '../house-filter/house-filter-item/house-filter-item.component';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HouseStoreService} from '../stores/house-store.service';
 import {House} from '../../models/house';
+import {of} from 'rxjs';
+import {HouseFilterService} from '../house-filter/house-filter.service';
+import {ChangeDetectorRef} from '@angular/core';
+import {HouseFilter} from '../../models/house-filter';
 
 describe('HouseListComponent', () => {
   let component: HouseListComponent;
   let fixture: ComponentFixture<HouseListComponent>;
   let houseStoreService: HouseStoreService;
+  let houseFilterService: HouseFilterService;
+  let changeDetectorRef: ChangeDetectorRef;
   const mockHouse: House = JSON.parse('{"index":7,"cadetBranchesDetails":[],"url":"https://anapioficeandfire.com/api/houses/7",' +
     '"name":"House Arryn of the Eyrie","region":"The Vale","coatOfArms":"A sky-blue falcon soaring against a white moon, on a sky-blue ' +
     'field(Bleu celeste, upon a plate a falcon volant of the field)","words":"As High as Honor","titles":["King of Mountain and Vale ' +
@@ -48,6 +58,16 @@ describe('HouseListComponent', () => {
     '"https://anapioficeandfire.com/api/characters/1655",' +
     '"https://anapioficeandfire.com/api/characters/1693","https://anapioficeandfire.com/api/characters/1715",' +
     '"https://anapioficeandfire.com/api/characters/1884"]}');
+  const mockHouseFilter: HouseFilter = {
+    name: 'House Algood',
+    region: '',
+    words: '',
+    hasWords: false,
+    hasTitles: false,
+    hasSeats: false,
+    hasDiedOut: false,
+    hasAncestralWeapons: false,
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -67,12 +87,15 @@ describe('HouseListComponent', () => {
         MatSnackBarModule,
         MatFormFieldModule,
         MatInputModule,
-
+        RouterModule.forRoot([])
       ],
       declarations: [
         HouseListComponent,
         HouseFilterComponent,
         HouseFilterItemComponent
+      ],
+      providers: [
+        {provide: ActivatedRoute, useValue: {queryParams: of({filter: '{"hasWords":true}'})}},
       ]
     })
       .compileComponents();
@@ -83,10 +106,12 @@ describe('HouseListComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
-
+    houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
+    changeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
   });
 
-  it('should create a component', () => {
+  it('should create a component', () => {    spyOn(houseStoreService, 'housesChanged').and.returnValue(of(<House[]>mockHouse));
+    spyOn(houseFilterService, 'filtersChanged').and.returnValue(of(<HouseFilter>mockHouseFilter));
     expect(component).toBeTruthy();
   });
 
