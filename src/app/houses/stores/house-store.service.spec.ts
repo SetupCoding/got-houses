@@ -88,6 +88,11 @@ describe('HouseStoreService', () => {
     expect(service.hasError).toBeTruthy();
   });
 
+  it('should run #setDetailedHouse() withput house', async () => {
+    service.setDetailedHouse(null, true);
+    expect(service.hasError).toBeTruthy();
+  });
+
   it('should run #getHouseByIndex()', async () => {
     const mockHouseClone = {...mockHouse};
     mockHouseClone.index = 1;
