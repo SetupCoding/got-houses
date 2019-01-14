@@ -25,6 +25,7 @@ class MockExtractService {
 describe('HouseDetailComponent', () => {
   let fixture;
   let component;
+  let houseStoreService;
   const housesRoutes: Routes = [{
     path: '', component: HousesComponent, children: [
       {path: '', component: HouseEmptyComponent},
@@ -78,6 +79,7 @@ describe('HouseDetailComponent', () => {
     fixture = TestBed.createComponent(HouseDetailComponent);
     component = fixture.debugElement.componentInstance;
     component.house = mockHouse;
+    houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
   });
 
   it('should create a component', async () => {
@@ -86,7 +88,6 @@ describe('HouseDetailComponent', () => {
 
 
   it('should run #ngOnInit()', () => {
-    const houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
     spyOn(houseStoreService, 'detailedHouseChanged').and.returnValue(of(<House>mockHouse));
     component.ngOnInit();
   });
@@ -96,7 +97,6 @@ describe('HouseDetailComponent', () => {
   });
 
   it('should run #subscribeToChanges()', async () => {
-    const houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
     delete component.house;
     spyOn(houseStoreService, 'detailedHouseChanged').and.returnValue(of(<House>mockHouse));
     component.subscribeToChanges();
@@ -151,26 +151,72 @@ describe('HouseDetailComponent', () => {
 
   it('should run #hasTitles()', async () => {
     const result = component.hasTitles();
+    expect(result).toBeTruthy();
   });
 
   it('should run #hasSeats()', async () => {
     const result = component.hasSeats();
+    expect(result).toBeTruthy();
   });
 
   it('should run #hasAncestralWeapons()', async () => {
     const result = component.hasAncestralWeapons();
+    expect(result).toBeTruthy();
   });
 
   it('should run #hasCadetBranches()', async () => {
     const result = component.hasCadetBranches();
+    expect(result).toBeTruthy();
   });
 
   it('should run #hasSwornMembers()', async () => {
     const result = component.hasSwornMembers();
+    expect(result).toBeTruthy();
   });
 
   it('should run #hasAdditionalInformation()', async () => {
     const result = component.hasAdditionalInformation();
+    expect(result).toBeTruthy();
+  });
+  
+  it('should run #hasAdditionalInformation() without titles', async () => {
+    component.house.titles = [''];
+    const result = component.hasAdditionalInformation();
+    expect(result).toBeTruthy();
+  });
+
+  it('should run #hasAdditionalInformation() without titles and seats', async () => {
+    component.house.titles = [''];
+    component.house.seats = [''];
+    const result = component.hasAdditionalInformation();
+    expect(result).toBeTruthy();
+  });
+
+  it('should run #hasAdditionalInformation() without titles and seats and ancestralWeapons', async () => {
+    component.house.titles = [''];
+    component.house.seats = [''];
+    component.house.ancestralWeapons = [''];
+    const result = component.hasAdditionalInformation();
+    expect(result).toBeTruthy();
+  });
+
+  it('should run #hasAdditionalInformation() without titles and seats and ancestralWeapons and cadetBranches ', async () => {
+    component.house.titles = [''];
+    component.house.seats = [''];
+    component.house.ancestralWeapons = [''];
+    component.house.cadetBranches = [];
+    const result = component.hasAdditionalInformation();
+    expect(result).toBeTruthy();
+  });
+
+  it('should run #hasAdditionalInformation() without titles and seats and ancestralWeapons and cadetBranches and swornMembers', async () => {
+    component.house.titles = [''];
+    component.house.seats = [''];
+    component.house.ancestralWeapons = [''];
+    component.house.cadetBranches = [];
+    component.house.swornMembers = [];
+    const result = component.hasAdditionalInformation();
+    expect(result).toBeFalsy();
   });
 
   it('should run #isInArray()', async () => {
@@ -178,3 +224,4 @@ describe('HouseDetailComponent', () => {
   });
 
 });
+
