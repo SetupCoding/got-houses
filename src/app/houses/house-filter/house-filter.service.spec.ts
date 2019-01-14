@@ -29,6 +29,9 @@ describe('HouseFilterService', () => {
   it('should run #addFilter()', async () => {
     service.addFilter(<MatSelect>{value: {name: 'name'}}, 'peter', false);
   });
+  it('should run #addFilter() with empty filter type', async () => {
+    service.addFilter(<MatSelect>{value: {name: undefined}}, 'peter', false);
+  });
 
   it('should run #removeFilter()', async () => {
     service.removeFilter('name');
