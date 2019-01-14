@@ -31,7 +31,30 @@ describe('HouseDetailComponent', () => {
       {path: ':index', component: HouseDetailComponent},
     ]
   }];
-  const mockHouse: House = JSON.parse('{"index":7,"cadetBranchesDetails":[],"url":"https://anapioficeandfire.com/api/houses/7","name":"House Arryn of the Eyrie","region":"The Vale","coatOfArms":"A sky-blue falcon soaring against a white moon, on a sky-blue field(Bleu celeste, upon a plate a falcon volant of the field)","words":"As High as Honor","titles":["King of Mountain and Vale (formerly)","Lord of the Eyrie","Defender of the Vale","Warden of the East"],"seats":["The Eyrie (summer)","Gates of the Moon (winter)"],"currentLord":"https://anapioficeandfire.com/api/characters/894","heir":"https://anapioficeandfire.com/api/characters/477","overlord":"https://anapioficeandfire.com/api/houses/16","founded":"Coming of the Andals","founder":"https://anapioficeandfire.com/api/characters/144","diedOut":"","ancestralWeapons":["Brisingr","Haudruff"],"cadetBranches":["https://anapioficeandfire.com/api/houses/6","https://anapioficeandfire.com/api/houses/5"],"swornMembers":["https://anapioficeandfire.com/api/characters/49","https://anapioficeandfire.com/api/characters/92","https://anapioficeandfire.com/api/characters/93","https://anapioficeandfire.com/api/characters/107","https://anapioficeandfire.com/api/characters/223","https://anapioficeandfire.com/api/characters/265","https://anapioficeandfire.com/api/characters/300","https://anapioficeandfire.com/api/characters/356","https://anapioficeandfire.com/api/characters/477","https://anapioficeandfire.com/api/characters/508","https://anapioficeandfire.com/api/characters/540","https://anapioficeandfire.com/api/characters/548","https://anapioficeandfire.com/api/characters/558","https://anapioficeandfire.com/api/characters/572","https://anapioficeandfire.com/api/characters/688","https://anapioficeandfire.com/api/characters/894","https://anapioficeandfire.com/api/characters/1068","https://anapioficeandfire.com/api/characters/1193","https://anapioficeandfire.com/api/characters/1280","https://anapioficeandfire.com/api/characters/1443","https://anapioficeandfire.com/api/characters/1655","https://anapioficeandfire.com/api/characters/1693","https://anapioficeandfire.com/api/characters/1715","https://anapioficeandfire.com/api/characters/1884"]}');
+  const mockHouse: House = JSON.parse('{"index":7,"cadetBranchesDetails":[],"url":"https://anapioficeandfire.com/api/houses/7",' +
+    '"name":"House Arryn of the Eyrie","region":"The Vale","coatOfArms":"A sky-blue falcon soaring against a white moon, on a sky-blue ' +
+    'field(Bleu celeste, upon a plate a falcon volant of the field)","words":"As High as Honor","titles":["King of Mountain and Vale ' +
+    '(formerly)","Lord of the Eyrie","Defender of the Vale","Warden of the East"],"seats":["The Eyrie (summer)","Gates of the Moon ' +
+    '(winter)"],"currentLord":"https://anapioficeandfire.com/api/characters/894","heir":' +
+    '"https://anapioficeandfire.com/api/characters/477","overlord":' +
+    '"https://anapioficeandfire.com/api/houses/16","founded":"Coming of the Andals",' +
+    '"founder":"https://anapioficeandfire.com/api/characters/144","diedOut":"",' +
+    '"ancestralWeapons":["Brisingr","Haudruff"],"cadetBranches":' +
+    '["https://anapioficeandfire.com/api/houses/6","https://anapioficeandfire.com/api/houses/5"],"swornMembers":' +
+    '["https://anapioficeandfire.com/api/characters/49","https://anapioficeandfire.com/api/characters/92",' +
+    '"https://anapioficeandfire.com/api/characters/93","https://anapioficeandfire.com/api/characters/107",' +
+    '"https://anapioficeandfire.com/api/characters/223","https://anapioficeandfire.com/api/characters/265",' +
+    '"https://anapioficeandfire.com/api/characters/300","https://anapioficeandfire.com/api/characters/356",' +
+    '"https://anapioficeandfire.com/api/characters/477","https://anapioficeandfire.com/api/characters/508",' +
+    '"https://anapioficeandfire.com/api/characters/540","https://anapioficeandfire.com/api/characters/548",' +
+    '"https://anapioficeandfire.com/api/characters/558","https://anapi' +
+    'oficeandfire.com/api/characters/572","https://anapioficeandfire.com/api/characters/688",' +
+    '"https://anapioficeandfire.com/api/characters/894","https://anapioficeandfire.com/api/characters/1068",' +
+    '"https://anapioficeandfire.com/api/characters/1193","https://anapioficeandf' +
+    'ire.com/api/characters/1280","https://anapioficeandfire.com/api/characters/1443",' +
+    '"https://anapioficeandfire.com/api/characters/1655",' +
+    '"https://anapioficeandfire.com/api/characters/1693","https://anapioficeandfire.com/api/characters/1715",' +
+    '"https://anapioficeandfire.com/api/characters/1884"]}');
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [
@@ -63,7 +86,7 @@ describe('HouseDetailComponent', () => {
 
 
   it('should run #ngOnInit()', () => {
-    let houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
+    const houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
     spyOn(houseStoreService, 'detailedHouseChanged').and.returnValue(of(<House>mockHouse));
     component.ngOnInit();
   });
@@ -83,13 +106,13 @@ describe('HouseDetailComponent', () => {
   });
 
   it('should run #setDetailedHouse()', async () => {
-    let iceAndFireService = fixture.debugElement.injector.get(IceAndFireService);
+    const iceAndFireService = fixture.debugElement.injector.get(IceAndFireService);
     spyOn(iceAndFireService, 'fetchHouse');
     component.setDetailedHouse();
   });
 
   it('should run #fetchDetails()', async () => {
-    let extractService = fixture.debugElement.injector.get(ExtractService);
+    const extractService = fixture.debugElement.injector.get(ExtractService);
     const result = component.fetchDetails();
   });
 
