@@ -26,10 +26,6 @@ export class HouseFilterService {
     return this._filtersChanged;
   }
 
-  set filtersChanged(value: Subject<HouseFilter>) {
-    this._filtersChanged = value;
-  }
-
   addFilter(selectedFilterType: MatSelect, filterInput: string, isFilterCheckboxChecked: boolean): void {
     const filterType = selectedFilterType.value.name;
     if (filterType) {
@@ -50,6 +46,7 @@ export class HouseFilterService {
     this.selectedFilter = <HouseFilter>{};
     this.filtersChanged.next(this.selectedFilter);
   }
+
   isEmptyObject(object = this.selectedFilter): boolean {
     return Object.keys(object).length === 0 && object.constructor === Object;
   }
