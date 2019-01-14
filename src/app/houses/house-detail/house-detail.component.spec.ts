@@ -73,7 +73,13 @@ describe('HouseDetailComponent', () => {
   });
 
   it('should run #subscribeToChanges()', async () => {
+    const houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
+    delete component.house;
+    spyOn(houseStoreService, 'detailedHouseChanged').and.returnValue(of(<House>mockHouse));
     component.subscribeToChanges();
+    expect(component.detailedHouseChangeSubscription).toBeTruthy();
+    houseStoreService.detailedHouseChanged.next(<House>mockHouse);
+    expect(component.house).toBeTruthy();
   });
 
   it('should run #setDetailedHouse()', async () => {
