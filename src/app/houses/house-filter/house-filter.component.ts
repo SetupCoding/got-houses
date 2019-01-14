@@ -1,6 +1,5 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material';
-import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {HouseFilterService} from './house-filter.service';
 import {HouseFilter, HouseFilterClass} from '../../models/house-filter';
 import {FormControl, Validators} from '@angular/forms';
@@ -23,8 +22,7 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
   filtersChangeSubscription: Subscription;
 
 
-  constructor(private iceAndFireService: IceAndFireService,
-              private houseFilterService: HouseFilterService,
+  constructor(private houseFilterService: HouseFilterService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -80,7 +78,6 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
   applyFilters(selectedFilterType: MatSelect, filterInput: string, isFilterCheckboxChecked: boolean): void {
     this.addFilter(selectedFilterType, filterInput, isFilterCheckboxChecked);
     this.resetFilterFields();
-    this.iceAndFireService.initializeHouseData();
   }
 
   resetFilterFields(): void {
@@ -92,7 +89,6 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
   resetFilters(): void {
     this.resetFilterFields();
     this.houseFilterService.removeAllFilters();
-    this.iceAndFireService.initializeHouseData();
   }
 
   hasFilters(object): boolean {
