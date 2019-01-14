@@ -1,0 +1,86 @@
+{
+  "configVersion": 1,
+  "index": "https://setupcoding.github.io/got-houses/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://setupcoding.github.io/got-houses/4.62a37e795b9a54a95ca5.js",
+        "https://setupcoding.github.io/got-houses/favicon.ico",
+        "https://setupcoding.github.io/got-houses/index.html",
+        "https://setupcoding.github.io/got-houses/main.cb199ecfcec3c67601c0.js",
+        "https://setupcoding.github.io/got-houses/polyfills.1ef83d22ada557f4a131.js",
+        "https://setupcoding.github.io/got-houses/runtime.a70a87fbea43030a1f7f.js",
+        "https://setupcoding.github.io/got-houses/styles.468a3f01e97dc5c3dfad.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://setupcoding.github.io/got-houses/assets/icons/icon-128x128.png",
+        "https://setupcoding.github.io/got-houses/assets/icons/icon-144x144.png",
+        "https://setupcoding.github.io/got-houses/assets/icons/icon-152x152.png",
+        "https://setupcoding.github.io/got-houses/assets/icons/icon-192x192.png",
+        "https://setupcoding.github.io/got-houses/assets/icons/icon-384x384.png",
+        "https://setupcoding.github.io/got-houses/assets/icons/icon-512x512.png",
+        "https://setupcoding.github.io/got-houses/assets/icons/icon-72x72.png",
+        "https://setupcoding.github.io/got-houses/assets/icons/icon-96x96.png"
+      ],
+      "patterns": [
+        "https:\\/\\/fonts\\.googleapis\\.com\\/.*"
+      ]
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "an-api-of-ice-and-fire",
+      "patterns": [
+        "https:\\/\\/anapioficeandfire\\.com\\/api\\/[^/]*"
+      ],
+      "strategy": "performance",
+      "maxSize": 100,
+      "maxAge": 259200000,
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "https://setupcoding.github.io/got-houses/4.62a37e795b9a54a95ca5.js": "0a9a4c2d0596d0a28e22d485ed8bc9ed6f2d74d9",
+    "https://setupcoding.github.io/got-houses/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "https://setupcoding.github.io/got-houses/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "https://setupcoding.github.io/got-houses/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "https://setupcoding.github.io/got-houses/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "https://setupcoding.github.io/got-houses/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "https://setupcoding.github.io/got-houses/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "https://setupcoding.github.io/got-houses/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "https://setupcoding.github.io/got-houses/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "https://setupcoding.github.io/got-houses/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "https://setupcoding.github.io/got-houses/index.html": "7e04085773d2bf035fb49b2fff0679f2f24cda20",
+    "https://setupcoding.github.io/got-houses/main.cb199ecfcec3c67601c0.js": "81ae52d9bcccd236a4c71a496ece6cfcce1fb5a9",
+    "https://setupcoding.github.io/got-houses/polyfills.1ef83d22ada557f4a131.js": "ce68d153e9b9b6d26b625069c0ee99ae09c6f255",
+    "https://setupcoding.github.io/got-houses/runtime.a70a87fbea43030a1f7f.js": "35ad5080bb678592814a0c6978fd753988ef7102",
+    "https://setupcoding.github.io/got-houses/styles.468a3f01e97dc5c3dfad.css": "238ca34e762f9c2a3d0ffd1a0e78b1374b909aef"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
