@@ -26,6 +26,13 @@ export class HouseFilterService {
     return this._filtersChanged;
   }
 
+  addFilters(filter: HouseFilter) {
+    Object.keys(filter).map(key => {
+      this.selectedFilter[key] = filter[key];
+    });
+    this.filtersChanged.next(this.selectedFilter);
+  }
+
   addFilter(selectedFilterType: MatSelect, filterInput: string, isFilterCheckboxChecked: boolean): void {
     const filterType = selectedFilterType.value.name;
     if (filterType) {
