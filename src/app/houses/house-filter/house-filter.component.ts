@@ -13,7 +13,6 @@ import {ActivatedRoute, convertToParamMap, ParamMap, Params, Router} from '@angu
   styleUrls: ['./house-filter.component.scss']
 })
 export class HouseFilterComponent implements OnInit, OnDestroy {
-  objectKeys = Object.keys;
   possibleFilterTypes: HouseFilter = new HouseFilterClass();
   filterTypes;
   filter: HouseFilter;
@@ -98,5 +97,9 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
 
   hasFilters(object): boolean {
     return !this.houseFilterService.isEmptyObject(object);
+  }
+
+  objectKeys(filter = {}): string[] {
+    return Object.keys(filter);
   }
 }
