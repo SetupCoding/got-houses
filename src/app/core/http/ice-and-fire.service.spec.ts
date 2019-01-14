@@ -19,6 +19,10 @@ describe('IceAndFireService', () => {
     service = TestBed.get(IceAndFireService);
     expect(service).toBeTruthy();
   });
+  it('should handle initialDataLengthFetch', async(() => {
+    service = TestBed.get(IceAndFireService);
+    service.fetchHouses(1, 1, true);
+  }));
   it('should handle error', async(() => {
     service = TestBed.get(IceAndFireService);
     service.fetchHouses();
