@@ -24,4 +24,7 @@ describe('HouseFilterItemComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should run #removeFilter()', () => {
+    component.removeFilter();
+  });
 });
