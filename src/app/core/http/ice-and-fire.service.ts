@@ -7,6 +7,7 @@ import {environment} from '../../../environments/environment';
 import {HouseFilterService} from '../../houses/house-filter/house-filter.service';
 import {Character} from '../../models/character';
 import {CharacterStoreService} from '../../houses/stores/character-store.service';
+import {HouseFilter} from '../../models/house-filter';
 
 
 @Injectable({
@@ -16,6 +17,7 @@ export class IceAndFireService {
   housesRequestSubscription: Subscription;
   houseDetailRequestSubscription: Subscription;
   currentPageSize = environment.defaultPageSize;
+  filter: HouseFilter = <HouseFilter>{};
 
   constructor(private houseStoreService: HouseStoreService,
               private houseFilterService: HouseFilterService,
@@ -24,6 +26,7 @@ export class IceAndFireService {
   }
 
   initializeHouseData(): void {
+    this.subscribeToChanges();
     this.fetchHouses(1, 1, true);
   }
 
@@ -45,6 +48,20 @@ export class IceAndFireService {
         console.error(error);
         this.houseStoreService.setHouses([], true);
       });
+  }
+
+  subscribeToChanges(): void {
+    this.houseFilterService.filtersChanged.subscribe((changedFilter: HouseFilter) => {
+      if (this.filterChanged(changedFilter)) {
+        this.filter = {...changedFilter};
+        this.fetchHouses(1, 1, true);
+      }
+    });
+  }
+
+  filterChanged(changedFilter: HouseFilter): boolean {
+    return !this.jsonEqual(this.filter, changedFilter) ||
+      (!this.houseFilterService.isEmptyObject(this.filter) && this.houseFilterService.isEmptyObject(changedFilter));
   }
 
   generateRequestUrl(page: number, pageSize: number): URL {
@@ -89,7 +106,7 @@ export class IceAndFireService {
   }
 
   addFiltersToRequest(requestUrl: URL) {
-    for (const [key, value] of Object.entries(this.houseFilterService.selectedFilter)) {
+    for (const [key, value] of Object.entries(this.filter)) {
       requestUrl.searchParams.append(key, value);
     }
   }
@@ -107,4 +124,7 @@ export class IceAndFireService {
     return parseInt(lastPageUrl.searchParams.get('page'), 10);
   }
 
+  jsonEqual(a, b): boolean {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
 }
