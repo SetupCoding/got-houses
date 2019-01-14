@@ -11,6 +11,6 @@ describe('ExtractService', () => {
   });
   it('should extract 123 from https://anapioficeandfire.com/api/houses/123', () => {
     const service: ExtractService = TestBed.get(ExtractService);
-    expect(service.extractIndexFromUrl('https://anapioficeandfire.com/api/houses/229')).toBeTruthy();
+    expect(service.extractIndexFromUrl('https://anapioficeandfire.com/api/houses/123') === 123).toBeTruthy();
   });
 });
