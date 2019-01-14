@@ -22,8 +22,8 @@ export class HouseStoreService {
     return this._houses;
   }
 
-  set detailedHouse(value: House) {
-    this._detailedHouse = value;
+  set houses(value: House[]) {
+    this._houses = value;
   }
 
   get maximumHouseDataLength(): number {
@@ -36,10 +36,6 @@ export class HouseStoreService {
 
   get housesChanged(): Subject<House[]> {
     return this._housesChanged;
-  }
-
-  set housesChanged(value: Subject<House[]>) {
-    this._housesChanged = value;
   }
 
   get detailedHouseChanged(): Subject<House> {
@@ -59,8 +55,8 @@ export class HouseStoreService {
   }
 
   setHouses(houses: House[], hasError?: boolean): void {
-    this._hasError = hasError;
-    this._houses = this.mapHousesData(houses);
+    this.hasError = hasError;
+    this.houses = this.mapHousesData(houses);
     this.housesChanged.next(this.houses.slice());
   }
 
