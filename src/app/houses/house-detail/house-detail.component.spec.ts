@@ -72,7 +72,7 @@ describe('HouseDetailComponent', () => {
         HousesComponent,
         HouseEmptyComponent],
       providers: [
-        {provide: ActivatedRoute, useValue: {params: of({index: '1'})}},
+        {provide: ActivatedRoute, useValue: {params: of({index: '7'})}},
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -89,6 +89,11 @@ describe('HouseDetailComponent', () => {
 
   it('should run #ngOnInit()', () => {
     spyOn(houseStoreService, 'detailedHouseChanged').and.returnValue(of(<House>mockHouse));
+    component.ngOnInit();
+  });
+  it('should run #ngOnInit() with same index', () => {
+    spyOn(houseStoreService, 'detailedHouseChanged').and.returnValue(of(<House>mockHouse));
+    component.index = 7;
     component.ngOnInit();
   });
 
@@ -119,9 +124,18 @@ describe('HouseDetailComponent', () => {
   it('should run #fetchOverlordDetails()', async () => {
     component.fetchOverlordDetails();
   });
+  it('should run #fetchOverlordDetails() without overlord', async () => {
+    delete component.house.overlord;
+    component.fetchOverlordDetails();
+  });
 
   it('should run #fetchDetailedCadetBranches()', async () => {
     spyOn(component, 'hasCadetBranches').and.returnValue(true);
+    component.fetchDetailedCadetBranches();
+  });
+  it('should run #fetchDetailedCadetBranches() without cadetBranches', async () => {
+    component.cadetBranches = [''];
+    spyOn(component, 'hasCadetBranches').and.returnValue(false);
     component.fetchDetailedCadetBranches();
   });
 
@@ -129,15 +143,33 @@ describe('HouseDetailComponent', () => {
     component.fetchCurrentLordDetails();
   });
 
+  it('should run #fetchCurrentLordDetails() without current lord', async () => {
+    delete component.house.currentLord;
+    component.fetchCurrentLordDetails();
+  });
+
   it('should run #fetchHeirDetails()', async () => {
+    component.fetchHeirDetails();
+  });
+
+  it('should run #fetchHeirDetails() without heir', async () => {
+    delete component.house.heir;
     component.fetchHeirDetails();
   });
 
   it('should run #fetchFounderDetails()', async () => {
     component.fetchFounderDetails();
   });
+  it('should run #fetchFounderDetails() without founder', async () => {
+    delete component.house.founder;
+    component.fetchFounderDetails();
+  });
 
   it('should run #fetchSwornMemberDetails()', async () => {
+    component.fetchSwornMemberDetails();
+  });
+  it('should run #fetchSwornMemberDetails() without sworn members', async () => {
+    component.house.swornMembers = [];
     component.fetchSwornMemberDetails();
   });
 
@@ -170,6 +202,7 @@ describe('HouseDetailComponent', () => {
   });
 
   it('should run #hasSwornMembers()', async () => {
+    component.house.swornMembers = ['swornmembersurl/1', 'swornmembersurl/2'];
     const result = component.hasSwornMembers();
     expect(result).toBeTruthy();
   });
@@ -178,7 +211,7 @@ describe('HouseDetailComponent', () => {
     const result = component.hasAdditionalInformation();
     expect(result).toBeTruthy();
   });
-  
+
   it('should run #hasAdditionalInformation() without titles', async () => {
     component.house.titles = [''];
     const result = component.hasAdditionalInformation();
