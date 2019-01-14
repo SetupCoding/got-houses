@@ -5,6 +5,7 @@ import {HouseFilterService} from './house-filter.service';
 import {HouseFilter, HouseFilterClass} from '../../models/house-filter';
 import {FormControl, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {ActivatedRoute, convertToParamMap, ParamMap, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-house-filter',
@@ -23,7 +24,10 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
   filtersChangeSubscription: Subscription;
 
 
-  constructor(private iceAndFireService: IceAndFireService, private houseFilterService: HouseFilterService) {
+  constructor(private iceAndFireService: IceAndFireService,
+              private houseFilterService: HouseFilterService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -40,12 +44,23 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
   }
 
   subscribeToChanges(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['filter']) {
+        this.filter = JSON.parse(params['filter']);
+        this.houseFilterService.addFilters(this.filter);
+      }
+    });
     this.filtersChangeSubscription = this.houseFilterService.filtersChanged.subscribe((houseFilter: HouseFilter) => {
       if (!this.hasFilters(houseFilter) && this.filter) {
         delete this.filter;
         this.resetFilters();
       } else {
         this.filter = houseFilter;
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {filter: JSON.stringify(this.filter)},
+          queryParamsHandling: 'merge'
+        });
       }
     });
   }

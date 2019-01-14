@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {House} from '../../models/house';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {HouseFilterService} from '../house-filter/house-filter.service';
 import {SnackBarService} from '../../core/snack-bar/snack-bar.service';
+import {HouseFilter} from '../../models/house-filter';
 
 @Component({
   selector: 'app-house-list',
@@ -24,16 +25,20 @@ export class HouseListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   housesChangeSubscription: Subscription;
+  filterChangeSubscription: Subscription;
   isPaginationEvent = false;
+  activeFilterClass: string;
 
   constructor(private iceAndFireService: IceAndFireService,
               private houseStoreService: HouseStoreService,
               private houseFilterService: HouseFilterService,
               private renderer: Renderer2,
-              private snackBarService: SnackBarService) {
+              private snackBarService: SnackBarService,
+              private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
+    this.activeFilterClass = this.activeFilter();
     this.subscribeToChanges();
     this.tableDataSource.paginator = this.paginator;
   }
@@ -41,6 +46,9 @@ export class HouseListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.housesChangeSubscription) {
       this.housesChangeSubscription.unsubscribe();
+    }
+    if (this.filterChangeSubscription) {
+      this.filterChangeSubscription.unsubscribe();
     }
   }
 
@@ -53,6 +61,10 @@ export class HouseListComponent implements OnInit, OnDestroy {
       }
       this.adjustPaginator();
       this.renderer.setProperty(this.tableContainerRef.nativeElement, 'scrollTop', 0);
+    });
+    this.filterChangeSubscription = this.houseFilterService.filtersChanged.subscribe((filter: HouseFilter) => {
+      this.activeFilterClass = this.activeFilter();
+      this.changeDetector.detectChanges();
     });
   }
 
@@ -75,5 +87,9 @@ export class HouseListComponent implements OnInit, OnDestroy {
 
   hasFilters(): boolean {
     return !this.houseFilterService.isEmptyObject();
+  }
+
+  activeFilter(): string {
+    return this.hasFilters() ? 'mat-accent' : '';
   }
 }

@@ -17,7 +17,8 @@
       </mat-list-item>
       <mat-list-item class="noIcon detailRoute" *ngIf="house.overlordDetails"
                      matTooltip="House that this house answers to"
-                     [routerLink]="['../'+house.overlordDetails.index]">Overlord: {{house.overlordDetails.name}}.
+                     [routerLink]="['../'+house.overlordDetails.index]" queryParamsHandling="merge">Overlord:
+        {{house.overlordDetails.name}}.
       </mat-list-item>
       <mat-list-item class="noIcon" *ngIf="house.coatOfArms">Coat of Arms: {{house.coatOfArms}}.</mat-list-item>
 
@@ -38,7 +39,7 @@
           </mat-expansion-panel-header>
           <mat-list>
             <mat-list-item class="swornMember" *ngFor="let swornMember of house.swornMembersDetails">
-              <app-character-detail  *ngIf="swornMember" [characterDetails]="swornMember"
+              <app-character-detail *ngIf="swornMember" [characterDetails]="swornMember"
                                     [characterType]="'Sworn Member'"></app-character-detail>
             </mat-list-item>
           </mat-list>
@@ -81,7 +82,8 @@
           </mat-expansion-panel-header>
           <mat-list>
             <mat-list-item class="detailRoute" *ngFor="let cadetBranch of house.cadetBranchesDetails"
-                           [routerLink]="['../'+cadetBranch.index]">{{cadetBranch.name}}
+                           [routerLink]="['../'+cadetBranch.index]" queryParamsHandling="merge">
+              {{cadetBranch.name}}
             </mat-list-item>
           </mat-list>
         </mat-expansion-panel>
