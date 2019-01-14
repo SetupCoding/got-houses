@@ -14,7 +14,7 @@ Run `ng test --code-coverage` to execute the unit tests via [Karma](https://karm
 
 Install `http-server` using the following command: `npm i -g http-server`. 
 
-Run `http-server -p 8001 coverage` and navigate to `http://localhost:8001/index.hml`.
+Run `http-server -p 8001 coverage` and navigate to `http://127.0.0.1:8001/`.
 
 ## Running end-to-end tests
 
