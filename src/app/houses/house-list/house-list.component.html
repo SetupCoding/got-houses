@@ -31,7 +31,7 @@
     </ng-container>
 
     <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <mat-row matRipple [routerLink]="[row.index]" routerLinkActive="highlighted"
+    <mat-row matRipple [routerLink]="[row.index]" queryParamsHandling="merge" routerLinkActive="highlighted"
              *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
