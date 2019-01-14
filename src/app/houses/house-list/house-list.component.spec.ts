@@ -123,8 +123,12 @@ describe('HouseListComponent', () => {
   it('should run #ngOnDestroy()', async () => {
     component.ngOnDestroy();
   });
-  it('should run #ngOnDestroy() without subscription', async () => {
+  it('should run #ngOnDestroy() without housesChangeSubscription', async () => {
     delete component.housesChangeSubscription;
+    component.ngOnDestroy();
+  });
+  it('should run #ngOnDestroy() without filterChangeSubscription', async () => {
+    delete component.filterChangeSubscription;
     component.ngOnDestroy();
   });
 
