@@ -20,6 +20,10 @@ Run `http-server -p 8001 coverage` and navigate to `http://localhost:8001/index.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Build for production
+
+Run `ng build --prod` to build the project. The build artifacts will be stored in the `dist/` directory.
+
 ## Running distributive
 
 Install `http-server` using the following command: `npm i -g http-server`. 
