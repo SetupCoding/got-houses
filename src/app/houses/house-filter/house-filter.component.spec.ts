@@ -91,6 +91,10 @@ describe('HouseFilterComponent', () => {
   it('should run #ngOnDestroy()', async () => {
     const result = component.ngOnDestroy();
   });
+  it('should run #ngOnDestroy() without filtersChangeSubscription', async () => {
+    delete component.filtersChangeSubscription;
+    component.ngOnDestroy();
+  });
 
   it('should run #subscribeToChanges()', async () => {
     const houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
@@ -113,12 +117,20 @@ describe('HouseFilterComponent', () => {
   });
 
   it('should run #addFilter()', async () => {
-    const houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
     component.addFilter(<MatSelect>{value: {name: 'name', type: 'string'}}, 'peter', null);
     expect(component.filter).toEqual(<HouseFilter>{name: 'peter', hasWords: true});
   });
+  it('should run #addFilter() with null filter', async () => {
+    component.filter = null;
+    component.addFilter(<MatSelect>{value: null}, 'peter', null);
+    expect(component.filter).toEqual(null);
+  });
+  it('should run #addFilter() with empty filter object', async () => {
+    component.filter = {};
+    component.addFilter(<MatSelect>{value: null}, 'peter', null);
+    expect(component.filter.name === 'peter' || component.filter.hasWords).toBeFalsy();
+  });
   it('should add name filter House Algood', async () => {
-    const houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
     component.addFilter(<MatSelect>{value: {name: 'name', type: 'string'}}, 'House Algood', null);
     expect(component.filter).toEqual(<HouseFilter>{name: 'House Algood', hasWords: true});
   });
