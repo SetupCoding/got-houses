@@ -3,10 +3,15 @@
   <mat-card-title class="characterTitle" [matTooltip]="characterType">
     <span *ngFor="let title of characterDetails.titles;
     let isLast=last; let index=index">{{title}}{{isLast ? (index === 0 && title === '' ? ' ' : ' - ' ) : ', '}}</span>
-    {{characterDetails.name}}
+    <ng-container *ngIf="characterDetails.name; else aliases">
+      {{characterDetails.name}}
+    </ng-container>
+    <ng-template #aliases *ngFor="let alias of characterDetails.aliases">
+      {{alias}}
+    </ng-template>
     <span *ngIf="characterDetails.gender">
-            <span *ngIf="characterDetails.gender === 'Male'">♂️</span>
-            <span *ngIf="characterDetails.gender === 'Female'">♀️</span>
+            <span *ngIf="characterDetails.gender === 'Male'" matTooltip="Male">♂️</span>
+            <span *ngIf="characterDetails.gender === 'Female'" matTooltip="Female">♀️</span>
           </span>
   </mat-card-title>
   <mat-card-subtitle>
