@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {House} from '../../models/house';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
@@ -33,7 +33,8 @@ export class HouseListComponent implements OnInit, OnDestroy {
               private houseStoreService: HouseStoreService,
               private houseFilterService: HouseFilterService,
               private renderer: Renderer2,
-              private snackBarService: SnackBarService) {
+              private snackBarService: SnackBarService,
+              private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -63,6 +64,7 @@ export class HouseListComponent implements OnInit, OnDestroy {
     });
     this.filterChangeSubscription = this.houseFilterService.filtersChanged.subscribe((filter: HouseFilter) => {
       this.activeFilterClass = this.activeFilter();
+      this.changeDetector.detectChanges();
     });
   }
 
