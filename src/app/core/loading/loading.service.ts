@@ -15,10 +15,6 @@ export class LoadingService {
     return this._loadingSubject;
   }
 
-  set loadingSubject(value: Subject<LoadingState>) {
-    this._loadingSubject = value;
-  }
-
   show(): void {
     this.loadingSubject.next(<LoadingState>{show: true});
   }
