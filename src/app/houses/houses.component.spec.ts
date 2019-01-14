@@ -83,4 +83,12 @@ describe('HousesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should run #updatemaxColumns() for small screen', () => {
+    component.updateMaxColumns(true);
+    expect(component.maxColumns).toBe(1);
+  });
+  it('should run #updatemaxColumns() for big screen', () => {
+    component.updateMaxColumns(false);
+    expect(component).toBeTruthy();
+  });
 });
