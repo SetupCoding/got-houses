@@ -1,4 +1,6 @@
-import { AppPage } from './app.po';
+import {AppPage} from './app.po';
+import {browser} from 'protractor';
+import {timeout} from 'rxjs/operators';
 
 describe('workspace-project App', () => {
   let page: AppPage;
@@ -7,8 +9,10 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to got-houses!');
+  it('should reroute to houses', () => {
+    const EC = browser.ExpectedConditions;
+    page.navigateTo().then(() => {
+      // browser.driver.wait(EC.urlContains('houses'), timeout);
+    });
   });
 });
