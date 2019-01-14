@@ -8,7 +8,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test --code-coverage` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+### Code coverage
+
+Install `http-server` using the following command: `npm i -g http-server`. 
+
+Run `http-server -p 8001 coverage` and navigate to `http://localhost:8001/index.hml`.
 
 ## Running end-to-end tests
 
@@ -18,4 +24,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 Install `http-server` using the following command: `npm i -g http-server`. 
 
-Run `http-server dist/got-houses` and navigate to `http://localhost:8080/`.
+Run `http-server -p 8080 dist/got-houses` and navigate to `http://localhost:8080/`.
