@@ -110,7 +110,8 @@ describe('HouseListComponent', () => {
     changeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
   });
 
-  it('should create a component', () => {    spyOn(houseStoreService, 'housesChanged').and.returnValue(of(<House[]>mockHouse));
+  it('should create a component', () => {
+    spyOn(houseStoreService, 'housesChanged').and.returnValue(of(<House>mockHouse));
     spyOn(houseFilterService, 'filtersChanged').and.returnValue(of(<HouseFilter>mockHouseFilter));
     expect(component).toBeTruthy();
   });
