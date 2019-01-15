@@ -364,8 +364,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-@angular/material/grid-list
-
 @angular/material/table
 
 @angular/material/expansion
