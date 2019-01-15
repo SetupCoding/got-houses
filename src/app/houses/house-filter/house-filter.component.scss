@@ -1,0 +1,15 @@
+mat-checkbox.filterCheckbox, mat-form-field.filterInput {
+  margin-left: 8px;
+}
+
+mat-form-field.filterInput[hidden] {
+  display: none;
+}
+
+span.buttonSpacer {
+  width: 10px;
+}
+
+mat-list-item.filterItem {
+  min-height: 64px;
+}

@@ -1,0 +1,58 @@
+:host {
+  padding: 50px 20px 20px 20px;
+  width: 100%;
+  height: inherit;
+}
+
+.table-container {
+  margin-top: 1.5%;
+  overflow: auto;
+  max-height: calc(100% - (80px + 15px));
+}
+
+mat-table.housesTable {
+  mat-header-row {
+    mat-header-cell:first-of-type {
+      max-width: 15%;
+    }
+  }
+  mat-row {
+    cursor: pointer;
+
+    &.highlighted {
+      background: darken(white, 10%);
+    }
+    &:focus {
+      outline: 0;
+    }
+
+    mat-cell:first-of-type {
+      max-width: 15%;
+    }
+  }
+}
+
+mat-paginator.housesPaginator {
+  background: unset;
+}
+
+
+mat-panel-description.tableFilter {
+  min-width: 30px;
+  flex-grow: 0;
+}
+
+mat-icon.filterIcon {
+  margin-top: 12px;
+}
+
+@media only screen and (max-width: 1168px) {
+  mat-expansion-panel-header.tableControls {
+    height: unset !important;
+    padding: 0 16px 0 16px;
+  }
+}
+
+
+
+

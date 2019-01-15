@@ -1,0 +1,94 @@
+<mat-card class="mat-elevation-z3" *ngIf="house">
+  <mat-card-title>{{house.name}}</mat-card-title>
+  <mat-card-subtitle>
+    <div *ngIf="house.founded || house.diedOut" matTooltip="Founded">* {{house.founded || 'unknown'}} <span
+      matTooltip="Died out"
+      *ngIf="house.diedOut">- † {{house.diedOut}}</span>
+    </div>
+  </mat-card-subtitle>
+  <mat-card-subtitle>
+    <div *ngIf="house.words" class="words">"{{house.words}}"</div>
+  </mat-card-subtitle>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngIf="house.region" matTooltip="Region that this house resides in">
+        <mat-icon>location_on</mat-icon>
+        {{house.region}}
+      </mat-list-item>
+      <mat-list-item class="noIcon detailRoute" *ngIf="house.overlordDetails"
+                     matTooltip="House that this house answers to"
+                     [routerLink]="['../'+house.overlordDetails.index]" queryParamsHandling="merge">Overlord:
+        {{house.overlordDetails.name}}.
+      </mat-list-item>
+      <mat-list-item class="noIcon" *ngIf="house.coatOfArms">Coat of Arms: {{house.coatOfArms}}.</mat-list-item>
+
+      <app-character-detail *ngIf="house.founderDetails" [characterDetails]="house.founderDetails"
+                            [characterType]="'Founder'"></app-character-detail>
+      <app-character-detail *ngIf="house.currentLordDetails" [characterDetails]="house.currentLordDetails"
+                            [characterType]="'Current Lord'"></app-character-detail>
+      <app-character-detail class="heir" *ngIf="house.heirDetails" [characterDetails]="house.heirDetails"
+                            [characterType]="'Heir'"></app-character-detail>
+
+      <mat-accordion
+        *ngIf="hasAdditionalInformation()">
+        <mat-expansion-panel *ngIf="hasSwornMembers()" class="expansionPanelRow">
+          <mat-expansion-panel-header>
+            <mat-panel-title matTooltip="Characters sworn to this house">
+              Sworn Members
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item class="swornMember" *ngFor="let swornMember of house.swornMembersDetails">
+              <app-character-detail *ngIf="swornMember" [characterDetails]="swornMember"
+                                    [characterType]="'Sworn Member'"></app-character-detail>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="hasTitles()" class="expansionPanelRow">
+          <mat-expansion-panel-header>
+            <mat-panel-title matTooltip="Titles this house holds">
+              Titles
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item *ngFor="let title of house.titles">{{title}}</mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="hasSeats()" class="expansionPanelRow">
+          <mat-expansion-panel-header>
+            <mat-panel-title matTooltip="Seats this house holds">
+              Seats
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item *ngFor="let seat of house.seats">{{seat}}</mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="hasAncestralWeapons()" class="expansionPanelRow">
+          <mat-expansion-panel-header>
+            <mat-panel-title matTooltip="Noteworthy weapons this house owns">
+              Ancestral Weapons
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item *ngFor="let weapon of house.ancestralWeapons">{{weapon}}</mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="hasCadetBranches()" class="expansionPanelRow">
+          <mat-expansion-panel-header>
+            <mat-panel-title matTooltip="Houses founded from this house">
+              Cadet Branches
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item class="detailRoute" *ngFor="let cadetBranch of house.cadetBranchesDetails"
+                           [routerLink]="['../'+cadetBranch.index]" queryParamsHandling="merge">
+              {{cadetBranch.name}}
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+

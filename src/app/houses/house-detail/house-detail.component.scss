@@ -1,0 +1,28 @@
+:host {
+  padding: 50px 20px 20px 20px;
+  width: 98%;
+  height: inherit;
+}
+
+mat-card-subtitle div.words {
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 1);
+}
+
+mat-list-item.noIcon {
+  margin-left: 24px;
+}
+
+mat-list-item.detailRoute {
+  cursor: pointer;
+}
+
+mat-list-item.swornMember {
+  margin: 0 0 12px -24px;
+}
+
+mat-expansion-panel.expansionPanelRow {
+  margin-left: 16px;
+}
+
