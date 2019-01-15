@@ -7,13 +7,13 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "https://setupcoding.github.io/got-houses/4.317ff98f16b119a9e277.js",
+        "https://setupcoding.github.io/got-houses/4.bbb1ead71114275de75f.js",
         "https://setupcoding.github.io/got-houses/favicon.ico",
         "https://setupcoding.github.io/got-houses/index.html",
-        "https://setupcoding.github.io/got-houses/main.88a1ce8398f1c25c6f66.js",
+        "https://setupcoding.github.io/got-houses/main.945138e1ae3db07fc904.js",
         "https://setupcoding.github.io/got-houses/polyfills.1ef83d22ada557f4a131.js",
-        "https://setupcoding.github.io/got-houses/runtime.66298561f7e58da15d75.js",
-        "https://setupcoding.github.io/got-houses/styles.9c0af0d3cf79e7c713dc.css"
+        "https://setupcoding.github.io/got-houses/runtime.8d7dfd1c3846c69bba0e.js",
+        "https://setupcoding.github.io/got-houses/styles.4976e233843b2a88a9b4.css"
       ],
       "patterns": []
     },
@@ -49,7 +49,7 @@
     }
   ],
   "hashTable": {
-    "https://setupcoding.github.io/got-houses/4.317ff98f16b119a9e277.js": "5fd1cb00822b1aaa7c4e0574c2d93f26e6098d49",
+    "https://setupcoding.github.io/got-houses/4.bbb1ead71114275de75f.js": "789653c4612e43858dd59805328c6e149477f37c",
     "https://setupcoding.github.io/got-houses/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
     "https://setupcoding.github.io/got-houses/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
     "https://setupcoding.github.io/got-houses/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
@@ -59,11 +59,11 @@
     "https://setupcoding.github.io/got-houses/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "https://setupcoding.github.io/got-houses/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "https://setupcoding.github.io/got-houses/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "https://setupcoding.github.io/got-houses/index.html": "230b7a032688b3135bafb315d43f9297c1aaa0ce",
-    "https://setupcoding.github.io/got-houses/main.88a1ce8398f1c25c6f66.js": "1448457c18802ea6b1442fff25b5d1e13a7e29f2",
+    "https://setupcoding.github.io/got-houses/index.html": "fc0b2c8f14f0aa94d40dc0e0f1a030c803acabac",
+    "https://setupcoding.github.io/got-houses/main.945138e1ae3db07fc904.js": "a4fe33b5598c10be2b8f03055b1627db3ec47ead",
     "https://setupcoding.github.io/got-houses/polyfills.1ef83d22ada557f4a131.js": "ce68d153e9b9b6d26b625069c0ee99ae09c6f255",
-    "https://setupcoding.github.io/got-houses/runtime.66298561f7e58da15d75.js": "6153fab33ec616c2d0e5758785779d75d921b814",
-    "https://setupcoding.github.io/got-houses/styles.9c0af0d3cf79e7c713dc.css": "9caea7a33be2d73f1dd0ce9347121dca1ab96c47"
+    "https://setupcoding.github.io/got-houses/runtime.8d7dfd1c3846c69bba0e.js": "9854a74c386912d5352bfc0a421a40ee524762d8",
+    "https://setupcoding.github.io/got-houses/styles.4976e233843b2a88a9b4.css": "34f933bf862aabef1561b13472592f1ca4cd6b15"
   },
   "navigationUrls": [
     {
