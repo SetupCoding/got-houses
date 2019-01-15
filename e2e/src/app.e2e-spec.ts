@@ -12,7 +12,9 @@ describe('workspace-project App', () => {
   it('should reroute to houses', () => {
     const EC = browser.ExpectedConditions;
     page.navigateTo().then(() => {
-      // browser.driver.wait(EC.urlContains('houses'), timeout);
+      browser.getCurrentUrl().then((url: string) => {
+        expect(url.includes('/house')).toBeTruthy();
+      });
     });
   });
 });
