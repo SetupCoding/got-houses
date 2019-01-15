@@ -24,8 +24,23 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 Run `ng build --prod` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running distributive
+## Build for GitHub Pages
+Install `angular-cli-ghpages` using the following command: `angular-cli-ghpages`
+
+Run `ng build --prod --base-href "https://setupcoding.github.io/got-houses/"`
+
+After that run `npx ngh --dir=dist/got-houses`.
+
+## Running distributive locally
 
 Install `http-server` using the following command: `npm i -g http-server`. 
 
+In `dist/got-houses/index.html` change the `<link rel="manifest" href="manifest.json">` to `<link rel="manifest" href="manifest-dev.json">`
+
 Run `http-server -p 8080 dist/got-houses` and navigate to `http://localhost:8080/`.
+
+## Running lighthouse
+
+ Install `lighthouse` using the following command: `npm i -g lighthouse`.
+ 
+ Run `lighthouse https://setupcoding.github.io/got-houses/ --view` or if running locally `lighthouse http://localhost:8080/ --view`.
