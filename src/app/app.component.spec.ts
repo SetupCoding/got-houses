@@ -30,4 +30,10 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
+  it('should run #ngOnInit() ', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    app.ngOnInit();
+    expect(app).toBeTruthy();
+  });
 });
