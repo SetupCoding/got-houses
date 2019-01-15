@@ -8,25 +8,74 @@ html, body {
 }
 
 app-root {
-  display: flex;
-  flex-direction: column;
   position: absolute;
-  top: 64px;
+  top: 40px;
+
   bottom: 0;
   left: 0;
   right: 0;
+  padding-left: 10px;
 
   app-houses {
-    overflow-y: auto;
-    flex: 1;
+    clear: both;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+
+    div.col {
+      display: block;
+      float: left;
+      margin: 1% 0 1% 1.6%;
+    }
+
+    div.col:first-child {
+      margin-left: 0;
+    }
+
+    @media only screen and (max-width: 879px) {
+      div.col {
+        margin: 1% 0 1% 0%;
+      }
+    }
+
+    div.span_2_of_2 {
+      width: 100%;
+    }
+
+    div.span_1_of_2 {
+      width: 49%;
+    }
+
+    @media only screen and (max-width: 879px) {
+      div.span_2_of_2 {
+        width: 100%;
+      }
+      div.span_1_of_2 {
+        width: 100%;
+      }
+    }
   }
+
+  app-houses:before {
+    content: "";
+    display: table;
+  }
+
+  app-houses:after {
+    content: "";
+    display: table;
+  }
+
+  app-houses:after {
+    clear: both;
+  }
+
 }
 
-mat-grid-list.contentView {
-  height: 100%;
-}
-mat-grid-tile.detailContainer{
-  overflow: auto;
+@media only screen and (max-width: 1196px) {
+  app-root {
+    top: 0;
+  }
 }
 
 .paginatorRow .mat-expansion-panel-content > .mat-expansion-panel-body {

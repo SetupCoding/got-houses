@@ -1,8 +1,6 @@
-<mat-grid-list class="contentView" [cols]="maxColumns" rowHeight="fit">
-  <mat-grid-tile>
-    <app-house-list></app-house-list>
-  </mat-grid-tile>
-  <mat-grid-tile class="detailContainer">
-    <router-outlet></router-outlet>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="col span_1_of_2">
+  <app-house-list></app-house-list>
+</div>
+<div class="col span_1_of_2">
+  <router-outlet></router-outlet>
+</div>

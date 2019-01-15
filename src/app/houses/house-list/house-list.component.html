@@ -1,11 +1,11 @@
 <mat-expansion-panel hideToggle class="mat-elevation-z3 paginatorRow">
-  <mat-expansion-panel-header>
+  <mat-expansion-panel-header class="tableControls">
     <mat-paginator class="housesPaginator" [length]="maximumTableDataLength" [pageSize]=pageSize
                    [pageSizeOptions]=pageSizeOptions
                    [showFirstLastButtons]="true"
                    (page)="onPaginateChange($event)" (click)="$event.stopPropagation()">
     </mat-paginator>
-    <mat-panel-description>
+    <mat-panel-description class="tableFilter">
       <mat-icon #filterListIcon class="filterIcon" [ngClass]="activeFilterClass" matTooltip="Filter">
         filter_list
       </mat-icon>
@@ -14,8 +14,9 @@
   <app-house-filter></app-house-filter>
 </mat-expansion-panel>
 
-<app-loading></app-loading>
+
 <div class="mat-elevation-z3 table-container" #tableContainer>
+  <app-loading></app-loading>
   <mat-table mat-table class="housesTable" [dataSource]="tableDataSource">
     <ng-container matColumnDef="houseIndex">
       <mat-header-cell mat-header-cell *matHeaderCellDef>#</mat-header-cell>
