@@ -127,15 +127,10 @@ describe('HouseListComponent', () => {
     delete component.housesChangeSubscription;
     component.ngOnDestroy();
   });
-  it('should run #ngOnDestroy() without filterChangeSubscription', async () => {
-    delete component.filterChangeSubscription;
-    component.ngOnDestroy();
-  });
 
   it('should run #subscribeToChanges()', async () => {
     component.subscribeToChanges();
     houseStoreService.housesChanged.next([mockHouse]);
-    expect(component.maximumTableDataLength).toBe(0);
     expect(component.tableDataSource.data).toBeTruthy();
   });
 
@@ -143,27 +138,8 @@ describe('HouseListComponent', () => {
     component.subscribeToChanges();
     houseStoreService.hasError = true;
     houseStoreService.housesChanged.next([mockHouse]);
-    expect(component.maximumTableDataLength).toBe(0);
     expect(component.tableDataSource.data).toBeTruthy();
   });
 
-  it('should run #fetchHousesByPage()', async () => {
-    component.fetchHousesByPage(1);
-  });
-
-  it('should run #adjustPaginator()', async () => {
-    component.adjustPaginator();
-  });
-  it('should run #adjustPaginator() with paginationEvent', async () => {
-    component.isPaginationEvent = true;
-    component.adjustPaginator();
-  });
-  it('should run #onPaginateChange()', async () => {
-    component.onPaginateChange(new Event('test'));
-  });
-
-  it('should run #hasFilters()', async () => {
-    const result = component.hasFilters();
-  });
 
 });

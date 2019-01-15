@@ -1,0 +1,19 @@
+mat-paginator.housesPaginator {
+  background: unset;
+}
+
+mat-panel-description.tableFilter {
+  min-width: 30px;
+  flex-grow: 0;
+}
+
+mat-icon.filterIcon {
+  margin-top: 16px;
+}
+
+@media only screen and (max-width: 1168px) {
+  mat-expansion-panel-header.tableControls {
+    height: unset !important;
+    padding: 0 16px 0 16px;
+  }
+}
