@@ -27,7 +27,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 Run `ng build --prod` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Build for GitHub Pages
-Install `angular-cli-ghpages` using the following command: `angular-cli-ghpages`
+Install `angular-cli-ghpages` using the following command: `npm i -g angular-cli-ghpages`
 
 Run `ng build --prod --base-href "https://setupcoding.github.io/got-houses/"`
 
