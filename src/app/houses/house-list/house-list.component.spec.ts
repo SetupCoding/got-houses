@@ -27,6 +27,7 @@ import {of} from 'rxjs';
 import {HouseFilterService} from '../house-filter/house-filter.service';
 import {ChangeDetectorRef} from '@angular/core';
 import {HouseFilter} from '../../models/house-filter';
+import {TableControlsComponent} from './table-controls/table-controls.component';
 
 describe('HouseListComponent', () => {
   let component: HouseListComponent;
@@ -92,7 +93,8 @@ describe('HouseListComponent', () => {
       declarations: [
         HouseListComponent,
         HouseFilterComponent,
-        HouseFilterItemComponent
+        HouseFilterItemComponent,
+        TableControlsComponent
       ],
       providers: [
         {provide: ActivatedRoute, useValue: {queryParams: of({filter: '{"hasWords":true}'})}},

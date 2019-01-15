@@ -26,6 +26,7 @@ import {HouseEmptyComponent} from './house-empty/house-empty.component';
 import {HouseDetailComponent} from './house-detail/house-detail.component';
 import {CharacterDetailComponent} from './character-detail/character-detail.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TableControlsComponent} from './house-list/table-controls/table-controls.component';
 
 describe('HousesComponent', () => {
   let component: HousesComponent;
@@ -69,6 +70,7 @@ describe('HousesComponent', () => {
         HouseEmptyComponent,
         HouseDetailComponent,
         CharacterDetailComponent,
+        TableControlsComponent
       ]
     })
       .compileComponents();
@@ -81,14 +83,6 @@ describe('HousesComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-  it('should run #updatemaxColumns() for small screen', () => {
-    component.updateMaxColumns(true);
-    expect(component.maxColumns).toBe(1);
-  });
-  it('should run #updatemaxColumns() for big screen', () => {
-    component.updateMaxColumns(false);
     expect(component).toBeTruthy();
   });
 });
