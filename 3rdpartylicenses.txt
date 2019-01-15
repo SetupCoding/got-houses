@@ -332,12 +332,12 @@ MIT
 
 @angular/material/tooltip
 
-@angular/material/snack-bar
-
 @angular/material/toolbar
 
 @angular/service-worker
 MIT
+
+@angular/material/snack-bar
 
 zone.js
 MIT
