@@ -14,7 +14,7 @@ export class ProgressiveWebAppComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.checkLaunchFromHomeScreen();
   }
 
@@ -22,7 +22,7 @@ export class ProgressiveWebAppComponent implements OnInit {
     this.pwaService.installPromptEvent.prompt();
   }
 
-  checkLaunchFromHomeScreen() {
+  checkLaunchFromHomeScreen(): void {
     if (window.matchMedia('(display-mode: standalone)').matches) {
       this.pwaService.deletePromptEvent();
     }

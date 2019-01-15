@@ -26,7 +26,7 @@ export class HouseFilterService {
     return this._filtersChanged;
   }
 
-  addFilters(filter: HouseFilter) {
+  addFilters(filter: HouseFilter): void {
     Object.keys(filter).map(key => {
       this.selectedFilter[key] = filter[key];
     });

@@ -57,7 +57,7 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     this.iceAndFireService.fetchHouse(this.index);
   }
 
-  private fetchDetails() {
+  private fetchDetails(): void {
     this.removePendingPromises();
     this.fetchOverlordDetails();
     this.fetchDetailedCadetBranches();
@@ -180,19 +180,19 @@ export class HouseDetailComponent implements OnInit, OnDestroy {
     return this.house.seats[0] !== '';
   }
 
-  hasAncestralWeapons() {
+  hasAncestralWeapons(): boolean {
     return this.house.ancestralWeapons[0] !== '';
   }
 
-  hasCadetBranches() {
+  hasCadetBranches(): boolean {
     return this.house.cadetBranches.length > 1;
   }
 
-  hasSwornMembers() {
+  hasSwornMembers(): boolean {
     return this.house.swornMembers.length > 1;
   }
 
-  hasAdditionalInformation() {
+  hasAdditionalInformation(): boolean {
     return this.hasTitles() || this.hasSeats() || this.hasAncestralWeapons() || this.hasCadetBranches() || this.hasSwornMembers();
   }
 

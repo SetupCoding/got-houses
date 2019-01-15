@@ -27,14 +27,14 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
               private router: Router) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscribeToChanges();
     this.filterTypes = Object.keys(this.possibleFilterTypes).map(filterType => {
       return {name: filterType, type: typeof this.possibleFilterTypes[filterType]};
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.filtersChangeSubscription) {
       this.filtersChangeSubscription.unsubscribe();
     }

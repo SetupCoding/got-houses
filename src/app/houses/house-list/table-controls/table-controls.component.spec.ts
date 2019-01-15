@@ -3,24 +3,28 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TableControlsComponent} from './table-controls.component';
 import {HouseStoreService} from '../../stores/house-store.service';
 import {HouseFilterService} from '../../house-filter/house-filter.service';
-import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {HouseFilter} from '../../../models/house-filter';
 import {House} from '../../../models/house';
 import {
-  MatCheckboxModule, MatChipsModule,
+  MatCheckboxModule,
+  MatChipsModule,
   MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatListModule,
+  MatInputModule,
+  MatListModule,
   MatPaginatorModule,
-  MatSelectModule, MatSnackBarModule, MatTableDataSource, MatTableModule
+  MatSelectModule,
+  MatSnackBarModule,
+  MatTableDataSource,
+  MatTableModule
 } from '@angular/material';
 import {HouseFilterComponent} from '../../house-filter/house-filter.component';
 import {HouseFilterItemComponent} from '../../house-filter/house-filter-item/house-filter-item.component';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {of} from 'rxjs';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HouseListComponent} from '../house-list.component';

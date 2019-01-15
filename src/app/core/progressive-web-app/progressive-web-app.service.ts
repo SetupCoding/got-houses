@@ -18,7 +18,8 @@ export class ProgressiveWebAppService {
       this.installPromptEvent = event;
     });
   }
-  deletePromptEvent(){
+
+  deletePromptEvent(): void {
     delete this.installPromptEvent;
   }
 }

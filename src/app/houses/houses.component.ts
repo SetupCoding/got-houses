@@ -7,7 +7,6 @@ import {IceAndFireService} from '../core/http/ice-and-fire.service';
   styleUrls: ['./houses.component.css']
 })
 export class HousesComponent implements OnInit {
-  maxColumns: number;
 
   constructor(private iceAndFireService: IceAndFireService) {
   }

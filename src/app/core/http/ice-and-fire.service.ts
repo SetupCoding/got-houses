@@ -105,7 +105,7 @@ export class IceAndFireService {
     });
   }
 
-  addFiltersToRequest(requestUrl: URL) {
+  addFiltersToRequest(requestUrl: URL):void {
     for (const [key, value] of Object.entries(this.filter)) {
       requestUrl.searchParams.append(key, value);
     }
