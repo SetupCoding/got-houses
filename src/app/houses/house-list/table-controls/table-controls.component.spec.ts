@@ -1,6 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {HouseListComponent} from './house-list.component';
+import {TableControlsComponent} from './table-controls.component';
+import {HouseStoreService} from '../../stores/house-store.service';
+import {HouseFilterService} from '../../house-filter/house-filter.service';
+import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {HouseFilter} from '../../../models/house-filter';
+import {House} from '../../../models/house';
 import {
   MatCheckboxModule,
   MatChipsModule,
@@ -12,29 +17,26 @@ import {
   MatPaginatorModule,
   MatSelectModule,
   MatSnackBarModule,
+  MatTableDataSource,
   MatTableModule
 } from '@angular/material';
-import {LoadingModule} from '../../core/loading/loading.module';
-import {HouseFilterComponent} from '../house-filter/house-filter.component';
+import {HouseFilterComponent} from '../../house-filter/house-filter.component';
+import {HouseFilterItemComponent} from '../../house-filter/house-filter-item/house-filter-item.component';
 import {ActivatedRoute, RouterModule} from '@angular/router';
+import {of} from 'rxjs';
 import {ReactiveFormsModule} from '@angular/forms';
-import {HouseFilterItemComponent} from '../house-filter/house-filter-item/house-filter-item.component';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HouseStoreService} from '../stores/house-store.service';
-import {House} from '../../models/house';
-import {of} from 'rxjs';
-import {HouseFilterService} from '../house-filter/house-filter.service';
-import {ChangeDetectorRef} from '@angular/core';
-import {HouseFilter} from '../../models/house-filter';
-import {TableControlsComponent} from './table-controls/table-controls.component';
+import {HouseListComponent} from '../house-list.component';
+import {LoadingModule} from '../../../core/loading/loading.module';
 
-describe('HouseListComponent', () => {
-  let component: HouseListComponent;
-  let fixture: ComponentFixture<HouseListComponent>;
+describe('TableControlsComponent', () => {
   let houseStoreService: HouseStoreService;
   let houseFilterService: HouseFilterService;
   let changeDetectorRef: ChangeDetectorRef;
+
+  let component: TableControlsComponent;
+  let fixture: ComponentFixture<WrapperComponent>;
   const mockHouse: House = JSON.parse('{"index":7,"cadetBranchesDetails":[],"url":"https://anapioficeandfire.com/api/houses/7",' +
     '"name":"House Arryn of the Eyrie","region":"The Vale","coatOfArms":"A sky-blue falcon soaring against a white moon, on a sky-blue ' +
     'field(Bleu celeste, upon a plate a falcon volant of the field)","words":"As High as Honor","titles":["King of Mountain and Vale ' +
@@ -91,38 +93,33 @@ describe('HouseListComponent', () => {
         RouterModule.forRoot([])
       ],
       declarations: [
+        WrapperComponent,
         HouseListComponent,
         HouseFilterComponent,
         HouseFilterItemComponent,
         TableControlsComponent
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         {provide: ActivatedRoute, useValue: {queryParams: of({filter: '{"hasWords":true}'})}},
       ]
     })
       .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HouseListComponent);
-    component = fixture.componentInstance;
+    fixture = TestBed.createComponent(WrapperComponent);
+    component = fixture.debugElement.children[0].componentInstance;
     fixture.detectChanges();
     houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
     houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
     changeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
-  });
+  }));
 
   it('should create a component', () => {
     spyOn(houseStoreService, 'housesChanged').and.returnValue(of(<House>mockHouse));
     spyOn(houseFilterService, 'filtersChanged').and.returnValue(of(<HouseFilter>mockHouseFilter));
     expect(component).toBeTruthy();
   });
-
-  it('should run #ngOnInit()', async () => {
-    component.ngOnInit();
-  });
-
-  it('should run #ngOnDestroy()', async () => {
+  it('should run #ngOnDestroy() without filterChangeSubscription', async () => {
+    delete component.filterChangeSubscription;
     component.ngOnDestroy();
   });
   it('should run #ngOnDestroy() without housesChangeSubscription', async () => {
@@ -133,6 +130,7 @@ describe('HouseListComponent', () => {
   it('should run #subscribeToChanges()', async () => {
     component.subscribeToChanges();
     houseStoreService.housesChanged.next([mockHouse]);
+    expect(component.maximumTableDataLength).toBe(0);
     expect(component.tableDataSource.data).toBeTruthy();
   });
 
@@ -140,8 +138,54 @@ describe('HouseListComponent', () => {
     component.subscribeToChanges();
     houseStoreService.hasError = true;
     houseStoreService.housesChanged.next([mockHouse]);
+    expect(component.maximumTableDataLength).toBe(0);
     expect(component.tableDataSource.data).toBeTruthy();
   });
 
+  it('should run #fetchHousesByPage()', async () => {
+    component.fetchHousesByPage(1);
+  });
 
+  it('should run #adjustPaginator()', async () => {
+    component.adjustPaginator();
+  });
+  it('should run #adjustPaginator() with paginationEvent', async () => {
+    component.isPaginationEvent = true;
+    component.adjustPaginator();
+  });
+  it('should run #onPaginateChange()', async () => {
+    component.onPaginateChange(new Event('test'));
+  });
+
+  it('should run #hasFilters()', async () => {
+    const result = component.hasFilters();
+  });
 });
+
+@Component({
+  selector: 'app-house-list',
+  template: '<app-table-controls [tableContainerRef]="tableContainerRef" [tableDataSource]="tableDataSource">' +
+    '</app-table-controls> <div class="mat-elevation-z3 table-container" #tableContainer>' +
+    '  <mat-table mat-table class="housesTable" [dataSource]="tableDataSource">' +
+    '    <ng-container matColumnDef="houseIndex">' +
+    '      <mat-header-cell mat-header-cell *matHeaderCellDef>#</mat-header-cell>' +
+    '      <mat-cell mat-cell *matCellDef="let house">{{house.index}}</mat-cell>' +
+    '    </ng-container>' +
+    '    <ng-container matColumnDef="houseName">' +
+    '      <mat-header-cell mat-header-cell *matHeaderCellDef>Name</mat-header-cell>' +
+    '      <mat-cell mat-cell *matCellDef="let house">{{house.name}}</mat-cell>' +
+    '    </ng-container>' +
+    '    <ng-container matColumnDef="houseRegion">' +
+    '      <mat-header-cell mat-header-cell *matHeaderCellDef>Region</mat-header-cell>' +
+    '      <mat-cell mat-cell *matCellDef="let house">{{house.region}}</mat-cell>' +
+    '    </ng-container>' +
+    '    <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>' +
+    '    <mat-row matRipple [routerLink]="[row.index]" queryParamsHandling="merge" routerLinkActive="highlighted"' +
+    '             *matRowDef="let row; columns: displayedColumns;"></mat-row>' +
+    '  </mat-table>' +
+    '</div>'
+})
+class WrapperComponent {
+  tableDataSource = new MatTableDataSource<House>([]);
+  // @ViewChild('tableContainer', {read: ElementRef}) public tableContainerRef: ElementRef;
+}

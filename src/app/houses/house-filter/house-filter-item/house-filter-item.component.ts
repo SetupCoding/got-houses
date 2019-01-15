@@ -14,7 +14,7 @@ export class HouseFilterItemComponent implements OnInit {
   constructor(private houseFilterService: HouseFilterService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
   removeFilter(): void {

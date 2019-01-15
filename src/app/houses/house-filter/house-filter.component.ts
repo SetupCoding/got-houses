@@ -1,10 +1,10 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material';
 import {HouseFilterService} from './house-filter.service';
 import {HouseFilter, HouseFilterClass} from '../../models/house-filter';
 import {FormControl, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {ActivatedRoute, convertToParamMap, ParamMap, Params, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-house-filter',
@@ -27,14 +27,14 @@ export class HouseFilterComponent implements OnInit, OnDestroy {
               private router: Router) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscribeToChanges();
     this.filterTypes = Object.keys(this.possibleFilterTypes).map(filterType => {
       return {name: filterType, type: typeof this.possibleFilterTypes[filterType]};
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.filtersChangeSubscription) {
       this.filtersChangeSubscription.unsubscribe();
     }
