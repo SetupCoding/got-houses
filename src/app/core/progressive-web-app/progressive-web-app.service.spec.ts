@@ -31,4 +31,9 @@ describe('ProgressiveWebAppService', () => {
     window.dispatchEvent(new Event('beforeinstallprompt'));
     expect(service.installPromptEvent).toBeTruthy();
   });
+  it('should delete installPrompt', () => {
+    const service: ProgressiveWebAppService = TestBed.get(ProgressiveWebAppService);
+    service.deletePromptEvent();
+    expect(service.installPromptEvent).toBeFalsy();
+  });
 });
