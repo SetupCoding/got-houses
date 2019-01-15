@@ -78,6 +78,11 @@ app-root {
   }
 }
 
+mat-list-item {
+  height: auto !important;
+  min-height: 48px;
+}
+
 .paginatorRow .mat-expansion-panel-content > .mat-expansion-panel-body {
   padding: 0;
 }
