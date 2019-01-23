@@ -1,5 +1,5 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Inject, Injectable, InjectionToken} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
@@ -8,11 +8,6 @@ import {environment} from '../../../environments/environment';
 @Injectable({providedIn: 'root'})
 export class HeaderInterceptor implements HttpInterceptor {
   // eTag = '';
-
-  constructor() {
-
-  }
-
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const clonedRequest = req.clone({

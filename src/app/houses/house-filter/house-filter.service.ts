@@ -10,10 +10,6 @@ export class HouseFilterService {
   private _selectedFilter: HouseFilter = <HouseFilter>{};
   private _filtersChanged = new Subject<HouseFilter>();
 
-  constructor() {
-  }
-
-
   get selectedFilter(): HouseFilter {
     return this._selectedFilter;
   }

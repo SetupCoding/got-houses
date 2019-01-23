@@ -3,8 +3,7 @@ import {ProgressiveWebAppService} from './progressive-web-app.service';
 
 @Component({
   selector: 'app-progressive-web-app',
-  templateUrl: './progressive-web-app.component.html',
-  styleUrls: ['./progressive-web-app.component.scss']
+  templateUrl: './progressive-web-app.component.html'
 })
 export class ProgressiveWebAppComponent implements OnInit {
 

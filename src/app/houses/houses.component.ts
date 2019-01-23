@@ -3,8 +3,7 @@ import {IceAndFireService} from '../core/http/ice-and-fire.service';
 
 @Component({
   selector: 'app-houses',
-  templateUrl: './houses.component.html',
-  styleUrls: ['./houses.component.css']
+  templateUrl: './houses.component.html'
 })
 export class HousesComponent implements OnInit {
 

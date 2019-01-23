@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {Subscription} from 'rxjs';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator} from '@angular/material';
 import {HouseFilterService} from '../../house-filter/house-filter.service';
 import {HouseStoreService} from '../../stores/house-store.service';
 import {House} from '../../../models/house';

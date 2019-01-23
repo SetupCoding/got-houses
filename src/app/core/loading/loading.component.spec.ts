@@ -2,7 +2,6 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LoadingComponent} from './loading.component';
 import {MatProgressBarModule} from '@angular/material';
-import {of} from 'rxjs';
 import {LoadingService} from './loading.service';
 import {LoadingState} from './loading';
 

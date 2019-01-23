@@ -1,20 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {HouseFilterService} from '../house-filter.service';
 
 @Component({
   selector: 'app-house-filter-item',
   templateUrl: './house-filter-item.component.html',
-  styleUrls: ['./house-filter-item.component.scss', '../house-filter.component.scss']
+  styleUrls: ['../house-filter.component.scss']
 })
-export class HouseFilterItemComponent implements OnInit {
+export class HouseFilterItemComponent {
   @Input() filter;
   @Input() filterKey;
   @Input() filterValue;
 
   constructor(private houseFilterService: HouseFilterService) {
-  }
-
-  ngOnInit(): void {
   }
 
   removeFilter(): void {

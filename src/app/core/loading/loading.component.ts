@@ -5,8 +5,7 @@ import {LoadingState} from './loading';
 
 @Component({
   selector: 'app-loading',
-  templateUrl: './loading.component.html',
-  styleUrls: ['./loading.component.scss']
+  templateUrl: './loading.component.html'
 })
 export class LoadingComponent implements OnInit, OnDestroy {
   isLoading = false;

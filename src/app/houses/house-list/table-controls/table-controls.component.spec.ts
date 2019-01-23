@@ -3,7 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TableControlsComponent} from './table-controls.component';
 import {HouseStoreService} from '../../stores/house-store.service';
 import {HouseFilterService} from '../../house-filter/house-filter.service';
-import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, Type} from '@angular/core';
 import {HouseFilter} from '../../../models/house-filter';
 import {House} from '../../../models/house';
 import {
@@ -29,6 +29,34 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HouseListComponent} from '../house-list.component';
 import {LoadingModule} from '../../../core/loading/loading.module';
+
+@Component({
+  selector: 'app-house-list',
+  template: '<app-table-controls [tableContainerRef]="tableContainerRef" [tableDataSource]="tableDataSource">' +
+    '</app-table-controls> <div class="mat-elevation-z3 table-container" #tableContainer>' +
+    '  <mat-table mat-table class="housesTable" [dataSource]="tableDataSource">' +
+    '    <ng-container matColumnDef="houseIndex">' +
+    '      <mat-header-cell mat-header-cell *matHeaderCellDef>#</mat-header-cell>' +
+    '      <mat-cell mat-cell *matCellDef="let house">{{house.index}}</mat-cell>' +
+    '    </ng-container>' +
+    '    <ng-container matColumnDef="houseName">' +
+    '      <mat-header-cell mat-header-cell *matHeaderCellDef>Name</mat-header-cell>' +
+    '      <mat-cell mat-cell *matCellDef="let house">{{house.name}}</mat-cell>' +
+    '    </ng-container>' +
+    '    <ng-container matColumnDef="houseRegion">' +
+    '      <mat-header-cell mat-header-cell *matHeaderCellDef>Region</mat-header-cell>' +
+    '      <mat-cell mat-cell *matCellDef="let house">{{house.region}}</mat-cell>' +
+    '    </ng-container>' +
+    '    <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>' +
+    '    <mat-row matRipple [routerLink]="[row.index]" queryParamsHandling="merge" routerLinkActive="highlighted"' +
+    '             *matRowDef="let row; columns: displayedColumns;"></mat-row>' +
+    '  </mat-table>' +
+    '</div>'
+})
+class WrapperComponent {
+  tableDataSource = new MatTableDataSource<House>([]);
+  // @ViewChild('tableContainer', {read: ElementRef}) public tableContainerRef: ElementRef;
+}
 
 describe('TableControlsComponent', () => {
   let houseStoreService: HouseStoreService;
@@ -110,7 +138,7 @@ describe('TableControlsComponent', () => {
     fixture.detectChanges();
     houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
     houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
-    changeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
+    changeDetectorRef = fixture.debugElement.injector.get<ChangeDetectorRef>(ChangeDetectorRef as Type<ChangeDetectorRef>);
   }));
 
   it('should create a component', () => {
@@ -159,33 +187,7 @@ describe('TableControlsComponent', () => {
 
   it('should run #hasFilters()', async () => {
     const result = component.hasFilters();
+    expect(result).toBe(true);
   });
 });
 
-@Component({
-  selector: 'app-house-list',
-  template: '<app-table-controls [tableContainerRef]="tableContainerRef" [tableDataSource]="tableDataSource">' +
-    '</app-table-controls> <div class="mat-elevation-z3 table-container" #tableContainer>' +
-    '  <mat-table mat-table class="housesTable" [dataSource]="tableDataSource">' +
-    '    <ng-container matColumnDef="houseIndex">' +
-    '      <mat-header-cell mat-header-cell *matHeaderCellDef>#</mat-header-cell>' +
-    '      <mat-cell mat-cell *matCellDef="let house">{{house.index}}</mat-cell>' +
-    '    </ng-container>' +
-    '    <ng-container matColumnDef="houseName">' +
-    '      <mat-header-cell mat-header-cell *matHeaderCellDef>Name</mat-header-cell>' +
-    '      <mat-cell mat-cell *matCellDef="let house">{{house.name}}</mat-cell>' +
-    '    </ng-container>' +
-    '    <ng-container matColumnDef="houseRegion">' +
-    '      <mat-header-cell mat-header-cell *matHeaderCellDef>Region</mat-header-cell>' +
-    '      <mat-cell mat-cell *matCellDef="let house">{{house.region}}</mat-cell>' +
-    '    </ng-container>' +
-    '    <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>' +
-    '    <mat-row matRipple [routerLink]="[row.index]" queryParamsHandling="merge" routerLinkActive="highlighted"' +
-    '             *matRowDef="let row; columns: displayedColumns;"></mat-row>' +
-    '  </mat-table>' +
-    '</div>'
-})
-class WrapperComponent {
-  tableDataSource = new MatTableDataSource<House>([]);
-  // @ViewChild('tableContainer', {read: ElementRef}) public tableContainerRef: ElementRef;
-}

@@ -25,7 +25,7 @@ import {HouseStoreService} from '../stores/house-store.service';
 import {House} from '../../models/house';
 import {of} from 'rxjs';
 import {HouseFilterService} from '../house-filter/house-filter.service';
-import {ChangeDetectorRef} from '@angular/core';
+import {ChangeDetectorRef, Type} from '@angular/core';
 import {HouseFilter} from '../../models/house-filter';
 import {TableControlsComponent} from './table-controls/table-controls.component';
 
@@ -109,7 +109,7 @@ describe('HouseListComponent', () => {
     fixture.detectChanges();
     houseStoreService = fixture.debugElement.injector.get(HouseStoreService);
     houseFilterService = fixture.debugElement.injector.get(HouseFilterService);
-    changeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
+    changeDetectorRef = fixture.debugElement.injector.get<ChangeDetectorRef>(ChangeDetectorRef as Type<ChangeDetectorRef>);
   });
 
   it('should create a component', () => {

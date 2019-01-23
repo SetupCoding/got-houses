@@ -4,7 +4,6 @@ import {SnackBarService} from './snack-bar.service';
 import {MatSnackBarModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {By} from '@angular/platform-browser';
 
 describe('SnackBarService', () => {
   beforeEach(() => TestBed.configureTestingModule({

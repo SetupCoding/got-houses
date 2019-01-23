@@ -1,10 +1,8 @@
 import {Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {IceAndFireService} from '../../core/http/ice-and-fire.service';
 import {House} from '../../models/house';
 import {MatTableDataSource} from '@angular/material';
 import {HouseStoreService} from '../stores/house-store.service';
 import {Subscription} from 'rxjs';
-import {HouseFilterService} from '../house-filter/house-filter.service';
 import {SnackBarService} from '../../core/snack-bar/snack-bar.service';
 
 @Component({
@@ -18,9 +16,7 @@ export class HouseListComponent implements OnInit, OnDestroy {
   @ViewChild('tableContainer', {read: ElementRef}) public tableContainerRef: ElementRef;
   housesChangeSubscription: Subscription;
 
-  constructor(private iceAndFireService: IceAndFireService,
-              private houseStoreService: HouseStoreService,
-              private houseFilterService: HouseFilterService,
+  constructor(private houseStoreService: HouseStoreService,
               private renderer: Renderer2,
               private snackBarService: SnackBarService) {
   }

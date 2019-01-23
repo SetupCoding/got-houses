@@ -12,9 +12,8 @@ describe('ProgressiveWebAppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ProgressiveWebAppComponent],
-      imports: [ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),]
-    })
-      .compileComponents();
+      imports: [ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

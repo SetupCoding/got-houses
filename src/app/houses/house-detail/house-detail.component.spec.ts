@@ -233,24 +233,26 @@ describe('HouseDetailComponent', () => {
     expect(result).toBeTruthy();
   });
 
-  it('should run #hasAdditionalInformation() without titles and seats and ancestralWeapons and cadetBranches ', async () => {
-    component.house.titles = [''];
-    component.house.seats = [''];
-    component.house.ancestralWeapons = [''];
-    component.house.cadetBranches = [];
-    const result = component.hasAdditionalInformation();
-    expect(result).toBeTruthy();
-  });
+  it('should run #hasAdditionalInformation() without titles and seats and ancestralWeapons and cadetBranches ',
+    async () => {
+      component.house.titles = [''];
+      component.house.seats = [''];
+      component.house.ancestralWeapons = [''];
+      component.house.cadetBranches = [];
+      const result = component.hasAdditionalInformation();
+      expect(result).toBeTruthy();
+    });
 
-  it('should run #hasAdditionalInformation() without titles and seats and ancestralWeapons and cadetBranches and swornMembers', async () => {
-    component.house.titles = [''];
-    component.house.seats = [''];
-    component.house.ancestralWeapons = [''];
-    component.house.cadetBranches = [];
-    component.house.swornMembers = [];
-    const result = component.hasAdditionalInformation();
-    expect(result).toBeFalsy();
-  });
+  it('should run #hasAdditionalInformation() without titles and seats and ancestralWeapons and cadetBranches and swornMembers',
+    async () => {
+      component.house.titles = [''];
+      component.house.seats = [''];
+      component.house.ancestralWeapons = [''];
+      component.house.cadetBranches = [];
+      component.house.swornMembers = [];
+      const result = component.hasAdditionalInformation();
+      expect(result).toBeFalsy();
+    });
 
   it('should run #isInArray()', async () => {
     const result = component.isInArray([{name: 'peter'}], {name: 'peter'});
