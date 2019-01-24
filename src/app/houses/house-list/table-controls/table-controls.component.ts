@@ -7,6 +7,7 @@ import {HouseStoreService} from '../../stores/house-store.service';
 import {House} from '../../../models/house';
 import {HouseFilter} from '../../../models/house-filter';
 import {IceAndFireService} from '../../../core/http/ice-and-fire.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-table-controls',
@@ -24,8 +25,11 @@ export class TableControlsComponent implements OnInit, OnDestroy {
   isPaginationEvent = false;
   activeFilterClass: string;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  isDataSetInitialized = false;
 
-  constructor(private iceAndFireService: IceAndFireService,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private iceAndFireService: IceAndFireService,
               private houseFilterService: HouseFilterService,
               private houseStoreService: HouseStoreService,
               private changeDetector: ChangeDetectorRef) {
@@ -53,7 +57,23 @@ export class TableControlsComponent implements OnInit, OnDestroy {
     });
     this.housesChangeSubscription = this.houseStoreService.housesChanged.subscribe((houses: House[]) => {
       this.maximumTableDataLength = this.houseStoreService.maximumHouseDataLength;
-      this.adjustPaginator();
+      if (!this.isDataSetInitialized) {
+        this.isDataSetInitialized = true;
+        this.applyRouteParams();
+      }
+    });
+  }
+
+  applyRouteParams(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['page'] && params['pageSize']) {
+        const pageIndex = parseInt(params['page'], 10);
+        setTimeout((idx) => {
+          this.paginator.pageIndex = pageIndex;
+        }, 0, pageIndex);
+        this.fetchHousesByPage(pageIndex + 1);
+        this.adjustPaginator();
+      }
     });
   }
 
@@ -66,8 +86,17 @@ export class TableControlsComponent implements OnInit, OnDestroy {
 
   onPaginateChange(event): void {
     this.pageSize = event.pageSize;
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        page: event.pageIndex,
+        pageSize: this.pageSize
+      },
+      queryParamsHandling: 'merge'
+    });
+
     this.isPaginationEvent = true;
-    this.fetchHousesByPage(event.pageIndex + 1);
   }
 
   hasFilters(): boolean {
